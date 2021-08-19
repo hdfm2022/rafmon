@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat do Henrique</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <script src="char.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+    <form id="login">
+        <input type="text" name="username" placeholder="Usuário">
+        <input type="password" name="password" placeholder="Senha">
+        <button type="submit">Conectar</button>
+    </form>
+
+    <div id="map" style="display:none; width: 800px; height: 600px; background-image: url('img/rock.png')">
+
+    </div>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .lifeup {
+            position: fixed;
+            height: 6px;
+            background: rgba(0, 255, 125, 1);
+            background-clip: content-box !important;
+            border: solid 1px gray;
+            margin-top: 3px;
+            margin-left: -1px;
+            width: 40px; 
+        }
+
+        .nameup {
+            position: fixed; 
+            margin-top: -13px; 
+            text-align: center; 
+            width: 80px; 
+            margin-left: -20px;
+        }
+
+        .char {
+            transition: margin 700ms;
+        }
+    </style>
+
+    <script type="text/javascript">
+        const socket = io('http://localhost:3001');
+        let conectado = false;
+
+        function renderMessage(message) {
+            $('.messages').append(`<div class="message"><strong>${message.author}</strong>: ${message.message}</div>`);
+        }
+
+        socket.on('disconnect', () => {
+            conectado = false;
+            $("#login").show();
+            $("#map").hide();
+            $("#map>div").remove();
+        });
+
+        socket.on('moveAccept', data => {
+            console.log('moveAccept', data);
+            $("#char_"+data.sid).css("margin-left", (((data.x - 1) * 40)) + "px");
+            $("#char_"+data.sid).css("margin-top", (((data.y - 1) * 40)) + "px");
+        });
+
+        socket.on('previousMessages', messages => {
+            for (message of messages) {
+                renderMessage(message);
+            }
+        })
+
+        socket.on('conectado', message => {
+            conectado = true;
+            console.log("char conectado", message);
+            char = new Char(message.charInfo.login, message.charInfo.nivel, message.charInfo.x, message.charInfo.y);
+            console.log(char);
+            $("#login").hide();
+            $("#map").show();
+
+            const namediv = "<div class='nameup'>" + message.charInfo.login + "</div>";
+            const lifediv = "<div class='lifeup' id='life_up_1' style='border-right-width: 0px; background: rgb(255, 80, 20);'></div>";
+            $("#map").append("<div class='char' id='char_"+socket.id+"' style='position: fixed; width: 40px; height: 40px;'>" + namediv + lifediv + "<img src='img/gifs/slime_blue_128x128.gif' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
+            
+            message.othersInfo.forEach(otherChar => {
+                const namediv = "<div class='nameup'>" + otherChar.login + "</div>";
+                const lifediv = "<div class='lifeup' id='life_up_1' style='border-right-width: 0px; background: rgb(255, 80, 20);'></div>";
+                $("#map").append("<div class='char' id='char_"+otherChar.sid+"' style='position: fixed; width: 40px; height: 40px;'>" + namediv + lifediv + "<img src='img/gifs/slime_blue_128x128.gif' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
+            });
+        
+        });
+
+        socket.on('newConnection', message => {
+            if (!conectado) {
+                return false;
+            }
+            console.log('newConnection', message);
+            
+            const namediv = "<div class='nameup'>" + message.login + "</div>";
+            const lifediv = "<div class='lifeup' id='life_up_1' style='border-right-width: 0px; background: rgb(255, 80, 20);'></div>";
+            $("#map").append("<div class='char' id='char_"+message.sid+"' style='position: fixed; width: 40px; height: 40px;'>" + namediv + lifediv + "<img src='img/gifs/slime_blue_128x128.gif' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
+        
+        })
+
+        document.addEventListener('keydown', handleKeydown);
+
+        function handleKeydown(event) {
+            if (conectado) {
+                const keyPressed = event.key;
+                if (keyPressed === "ArrowRight" || keyPressed === "ArrowLeft" || keyPressed === "ArrowUp" || keyPressed === "ArrowDown") {
+                    console.log('movement', keyPressed);
+                    const messageObject = {
+                        key: keyPressed
+                    }
+                    socket.emit('move', messageObject);
+                } else {
+                    console.warn('unknow kney', keyPressed);
+                }
+            }
+        }
+
+        $("#login").submit(function (event) {
+            event.preventDefault();
+            if (conectado) {
+                return false;
+            }
+            const username = $("input[name='username']").val();
+            const password = $("input[name='password']").val();
+
+            const liberaSemSenha = true;
+
+            if (username.length && (password.length || liberaSemSenha)) {
+                const messageObject = {
+                    username: username,
+                    password: password,
+                };
+                socket.emit('sendLogin', messageObject);
+                // renderMessage(messageObject);
+            }
+
+        });
+    </script>
+</body>
+
+</html>
