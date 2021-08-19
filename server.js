@@ -28,7 +28,16 @@ io.on('connection', socket => {
         console.log("move", data);
         if (data.key == "ArrowRight") {
             if (chars[socket.id].x < 20) {
-                chars[socket.id].x++;
+                let colision = false;
+                maps[chars[socket.id].map].chars.forEach(element => {
+                    if (chars[element].y == chars[socket.id].y && chars[element].x == (chars[socket.id].x + 1)) {
+                        colision = true;
+                    }
+                });
+                if (!colision) {
+                    chars[socket.id].x++;
+                }
+                
             }
         }
         if (data.key == "ArrowLeft") {
