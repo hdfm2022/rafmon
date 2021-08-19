@@ -1,0 +1,13 @@
+{
+  "name": "rafmon",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/hdfm2022/rafmon.git",
+  "author": "hdfm2022 <hdfmacedo+git@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "socket.io": "^4.1.3"
+  }
+}
