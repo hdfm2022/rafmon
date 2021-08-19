@@ -65,6 +65,8 @@ io.on('connection', socket => {
                     maps[charInfo.map].chars.splice(findIdxInsideMap, 1);
                 }
                 delete chars[socket.id];
+
+                socket.broadcast.emit('offline', {sid : socket.id } );
             } else {
                 console.log(`> Player nem estava logado`)
             }
