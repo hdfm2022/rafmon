@@ -17,42 +17,58 @@ app.use('/', (req, res) => {
 
 console.log("server is live");
 
-const messages = [];
-const chars = [];
-const maps = [];
-maps[1] = { chars: {} };
+var maps = [];
+maps[1] = { chars: {}, items: [
+      {type: 'stone.png', x: 6, y: 6}
+    , {type: 'stone.png', x: 8, y: 12}
+] 
+};
 
 io.on('connection', socket => {
     console.log(`socket conectado ${socket.id}`);
 
     socket.on('move', data => {
         let newCharPosition = false;
+        let collisionResult = false;
         const mapId = data.mapId;
 
         const char = maps[data.mapId].chars[socket.id];
 
         if (data.key == "ArrowRight") {
-            if (char.x < 20 && !collisionDetection(maps[mapId], char.x + 1, char.y)) {
+            collisionResult = collisionDetection(maps[mapId], char.x + 1, char.y);
+            if (char.x < 20 && collisionResult === false) {
                 char.x++;
                 newCharPosition = true;
             }
         }
         if (data.key == "ArrowLeft") {
-            if (char.x > 1 && !collisionDetection(maps[mapId], char.x - 1, char.y)) {
+            collisionResult = collisionDetection(maps[mapId], char.x - 1, char.y);
+            if (char.x > 1 && collisionResult === false) {
                 char.x--;
                 newCharPosition = true;
             }
         }
         if (data.key == "ArrowDown") {
-            if (char.y < 15 && !collisionDetection(maps[mapId], char.x, char.y + 1)) {
+            collisionResult = collisionDetection(maps[mapId], char.x, char.y + 1);
+            if (char.y < 15 && collisionResult === false) {
                 char.y++;
                 newCharPosition = true;
             }
         }
         if (data.key == "ArrowUp") {
-            if (char.y > 1 && !collisionDetection(maps[mapId], char.x, char.y - 1)) {
+            collisionResult = collisionDetection(maps[mapId], char.x, char.y - 1);
+            if (char.y > 1 && collisionResult === false) {
                 char.y--;
                 newCharPosition = true;
+            }
+        }
+
+        if (collisionResult instanceof Object) {
+            if (collisionResult.type == "item_collision") {
+                if (maps[mapId].items[collisionResult.item].type == "stone.png") {
+                    console.log("stone move!");
+                    tryToMoveItem(mapId, collisionResult.item, data.key);
+                }
             }
         }
 
@@ -62,6 +78,53 @@ io.on('connection', socket => {
             socket.to('map_'+mapId).emit('charMoved', retorno);
         }
     });
+
+    function tryToMoveItem(mapId, itemId, movimentTried) {
+        let newItemPosition = false;
+
+        console.log("try get item", mapId, itemId);
+        console.log(maps);
+        const item = maps[mapId].items[itemId];
+
+        if (movimentTried == "ArrowRight") {
+            collisionResult = collisionDetection(maps[mapId], item.x + 1, item.y);
+            if (item.x < 20 && collisionResult === false) {
+                item.x++;
+                newItemPosition = true;
+            }
+        }
+        if (movimentTried == "ArrowLeft") {
+            collisionResult = collisionDetection(maps[mapId], item.x - 1, item.y);
+            if (item.x > 1 && collisionResult === false) {
+                item.x--;
+                newItemPosition = true;
+            }
+        }
+        if (movimentTried == "ArrowDown") {
+            collisionResult = collisionDetection(maps[mapId], item.x, item.y + 1);
+            if (item.y < 15 && collisionResult === false) {
+                item.y++;
+                newItemPosition = true;
+            }
+        }
+        if (movimentTried == "ArrowUp") {
+            collisionResult = collisionDetection(maps[mapId], item.x, item.y - 1);
+            if (item.y > 1 && collisionResult === false) {
+                item.y--;
+                newItemPosition = true;
+            }
+        }
+
+        if (newItemPosition) {
+            const retorno = { id: itemId, x: item.x, y: item.y };
+            socket.emit('itemMoved', retorno );
+            socket.to('map_'+mapId).emit('itemMoved', retorno);
+
+            setTimeout(() => {
+                tryToMoveItem(mapId, itemId, movimentTried)
+            }, 200);
+        }
+    }
 
     socket.on('disconnect', () => {
         console.log(`> Player disconnected: ${socket.id}`)
@@ -76,7 +139,6 @@ io.on('connection', socket => {
     })
 
     socket.on('sendLogin', data => {
-        messages.push(data);
         const charPublicInfo = {
             sid:    socket.id,
             login:  data.username,

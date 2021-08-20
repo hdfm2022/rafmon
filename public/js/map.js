@@ -8,6 +8,15 @@ map = {
         $("#map").hide();
         $("#map>div").remove();
     },
+    item: {
+        append(itemId, item) {
+            $("#map").append("<div class='item' id='item_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/items/"+item.type+"' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
+        },
+        move(itemId, x, y) {
+            $("#item_" + itemId).css("margin-left", (((x - 1) * 40)) + "px");
+            $("#item_" + itemId).css("margin-top", (((y - 1) * 40)) + "px");
+        }
+    },
     char: {
         append(char) {
             const namediv = "<div class='nameup'>" + char.login + "</div>";

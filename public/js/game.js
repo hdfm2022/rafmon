@@ -18,6 +18,11 @@ socket.on('youAreConnected', message => {
     for (const [charSid, char] of Object.entries(message.mapinfo.chars)) {
         map.char.append(char);
     }
+
+    for (const [itemId, item] of Object.entries(message.mapinfo.items)) {
+        console.log("append item", item);
+        map.item.append(itemId, item);
+    }
 });
 
 socket.on('charMoved', data => {
@@ -34,3 +39,7 @@ socket.on('newCharIsHere', newCharVisible => {
     }
     map.char.append(newCharVisible);
 })
+
+socket.on('itemMoved', data => {
+    map.item.move(data.id, data.x, data.y);
+});
