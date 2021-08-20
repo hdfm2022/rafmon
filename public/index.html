@@ -39,14 +39,14 @@
             border: solid 1px gray;
             margin-top: 3px;
             margin-left: -1px;
-            width: 40px; 
+            width: 40px;
         }
 
         .nameup {
-            position: fixed; 
-            margin-top: -13px; 
-            text-align: center; 
-            width: 80px; 
+            position: fixed;
+            margin-top: -13px;
+            text-align: center;
+            width: 80px;
             margin-left: -20px;
             font-family: Verdana;
             text-shadow: 0 0 2px #0ac519;
@@ -55,21 +55,22 @@
 
         .char {
             transition: margin 700ms;
-            position: fixed; 
-            width: 40px; 
-            height: 40px; 
+            position: fixed;
+            width: 40px;
+            height: 40px;
         }
     </style>
 
     <script type="text/javascript">
         const socket = io('http://localhost:3001');
         let conectado = false;
+        let mapId = 1;
 
         function printDivChar(char) {
             // const namediv = "<div class='nameup'>" + char.login + " ("+char.nivel+")</div>";
             const namediv = "<div class='nameup'>" + char.login + "</div>";
             const lifediv = "<div class='lifeup' id='life_up_1' style='border-right-width: 0px; background: rgb(255, 80, 20);'></div>";
-            $("#map").append("<div class='char' id='char_"+char.sid+"' style='margin-left: "+(((char.x - 1) * 40)) + "px; margin-top: "+(((char.y - 1) * 40)) + "px;"+"'>" + namediv + lifediv + "<img src='img/gifs/slime_blue_128x128.gif' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
+            $("#map").append("<div class='char' id='char_" + char.sid + "' style='margin-left: " + (((char.x - 1) * 40)) + "px; margin-top: " + (((char.y - 1) * 40)) + "px;" + "'>" + namediv + lifediv + "<img src='img/gifs/slime_blue_128x128.gif' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
         }
 
         function renderMessage(message) {
@@ -85,8 +86,8 @@
 
         socket.on('moveAccept', data => {
             console.log('moveAccept', data);
-            $("#char_"+data.sid).css("margin-left", (((data.x - 1) * 40)) + "px");
-            $("#char_"+data.sid).css("margin-top", (((data.y - 1) * 40)) + "px");
+            $("#char_" + data.sid).css("margin-left", (((data.x - 1) * 40)) + "px");
+            $("#char_" + data.sid).css("margin-top", (((data.y - 1) * 40)) + "px");
         });
 
         socket.on('previousMessages', messages => {
@@ -96,7 +97,7 @@
         })
 
         socket.on('offline', message => {
-            $("#char_"+message.sid).hide();
+            $("#char_" + message.sid).hide();
         });
 
         socket.on('conectado', message => {
@@ -107,13 +108,11 @@
             $("#login").hide();
             $("#map").show();
 
-            const mchar = message.charInfo;
+            for (const [key, value] of Object.entries(message.mapinfo.chars)) {
+                console.log(`${key}: ${value}`); 
+                printDivChar(value);
+            }
 
-            printDivChar(mchar);
-            message.othersInfo.forEach(otherChar => {
-                printDivChar(otherChar);
-             });
-        
         });
 
         socket.on('newConnection', otherChar => {
@@ -132,11 +131,12 @@
                 if (keyPressed === "ArrowRight" || keyPressed === "ArrowLeft" || keyPressed === "ArrowUp" || keyPressed === "ArrowDown") {
                     console.log('movement', keyPressed);
                     const messageObject = {
-                        key: keyPressed
+                        key: keyPressed,
+                        mapId
                     }
                     socket.emit('move', messageObject);
                 } else {
-                    console.warn('unknow kney', keyPressed);
+                    console.warn('unknow key', keyPressed);
                 }
             }
         }

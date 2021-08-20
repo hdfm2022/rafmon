@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const CollisionDetection = require('./server/collision_detection');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -19,66 +20,70 @@ console.log("server is live");
 const messages = [];
 const chars = [];
 const maps = [];
-maps[1] = { chars: [] };
+maps[1] = { chars: {} };
+
+const collisionDetection = new CollisionDetection(chars);
 
 io.on('connection', socket => {
     console.log(`socket conectado ${socket.id}`);
 
     socket.on('move', data => {
+        let collision = false;
+
+        const char = maps[data.mapId].chars[socket.id];
+
         console.log("move", data);
         if (data.key == "ArrowRight") {
-            if (chars[socket.id].x < 20) {
-                let colision = false;
-                maps[chars[socket.id].map].chars.forEach(element => {
-                    if (chars[element].y == chars[socket.id].y && chars[element].x == (chars[socket.id].x + 1)) {
-                        colision = true;
-                    }
-                });
-                if (!colision) {
-                    chars[socket.id].x++;
-                }
-                
+            if (char.x < 20 && !collisionDetection.check(maps[data.mapId], char.x + 1, char.y)) {
+                char.x++;
             }
         }
         if (data.key == "ArrowLeft") {
-            if (chars[socket.id].x > 1) {
-                chars[socket.id].x--;
+            if (char.x > 1 && !collisionDetection.check(maps[data.mapId], char.x - 1, char.y)) {
+                char.x--;
             }
         }
         if (data.key == "ArrowDown") {
-            if (chars[socket.id].y < 15) {
-                chars[socket.id].y++;
+            if (char.y < 15 && !collisionDetection.check(maps[data.mapId], char.x, char.y + 1)) {
+                char.y++;
             }
         }
         if (data.key == "ArrowUp") {
-            if (chars[socket.id].y > 1) {
-                chars[socket.id].y--;
+            if (char.y > 1 && !collisionDetection.check(maps[data.mapId], char.x, char.y - 1)) {
+                char.y--;
             }
         }
-        // console.log(chars[socket.id]);
 
-        const retorno = { sid: socket.id, x: chars[socket.id].x, y: chars[socket.id].y };
-        socket.emit('moveAccept', retorno );
-        socket.broadcast.emit('moveAccept', retorno);
+        if (!collision) {
+            const retorno = { sid: socket.id, x: char.x, y: char.y };
+            console.log("moveAccept", retorno );
+            socket.emit('moveAccept', retorno );
+            socket.broadcast.emit('moveAccept', retorno);
+        }
     });
 
     socket.on('disconnect', () => {
         console.log(`> Player disconnected: ${socket.id}`)
         try {
-            const charInfo = chars[socket.id];
+            // vou ter que armazenar a lista de maps por char, pra dar logout...
+            // const charInfo = chars[socket.id];
 
-            if (charInfo) {
-                console.log(`> Player estava logado`)
-                const findIdxInsideMap = maps[charInfo.map].chars.findIndex(element => element == socket.id);
-                if (findIdxInsideMap >= 0) {
-                    maps[charInfo.map].chars.splice(findIdxInsideMap, 1);
-                }
-                delete chars[socket.id];
 
-                socket.broadcast.emit('offline', {sid : socket.id } );
-            } else {
-                console.log(`> Player nem estava logado`)
-            }
+            delete maps[1].chars[socket.id];
+            console.log(maps[1].chars, "after delete");
+
+            // if (charInfo) {
+            //     console.log(`> Player estava logado`)
+
+            //     if (findIdxInsideMap >= 0) {
+            //         maps[charInfo.map].chars.splice(findIdxInsideMap, 1);
+            //     }
+            //     delete chars[socket.id];
+
+            socket.broadcast.emit('offline', {sid : socket.id } );
+            // } else {
+            //     console.log(`> Player nem estava logado`)
+            // }
             // delete chars[socket.id];
         } catch(er) {
             console.log(er);
@@ -93,32 +98,26 @@ io.on('connection', socket => {
             sid:    socket.id,
             login:  data.username,
             nivel:  1,
-            map:    1,
             x:      Math.ceil(Math.random() * 5),
             y:      Math.ceil(Math.random() * 5),
         }
 
-        chars[socket.id] = charPublicInfo;
-
-        maps[1].chars.push(socket.id);
-
-        const othersInfo = [];
-        maps[1].chars.forEach(charSocketId => {
-            if (charSocketId != socket.id) {
-                othersInfo.push(chars[charSocketId]);
-            }
-        });
+        maps[1].chars[socket.id] = charPublicInfo;
 
         const infoConectado = {
             'charInfo': charPublicInfo,
             'mapinfo': maps[1],
-            'othersInfo': othersInfo
+            'chars': maps[1].chars
         }
+
+        console.log("conectado", infoConectado);
 
         socket.emit('conectado', infoConectado);
         socket.broadcast.emit('newConnection', charPublicInfo);
     });
 
 });
+
+
 
 server.listen(3001);
