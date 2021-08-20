@@ -26,69 +26,49 @@ io.on('connection', socket => {
     console.log(`socket conectado ${socket.id}`);
 
     socket.on('move', data => {
-        let collision = false;
+        let newCharPosition = false;
+        const mapId = data.mapId;
 
         const char = maps[data.mapId].chars[socket.id];
 
         if (data.key == "ArrowRight") {
-            if (char.x < 20 && !collisionDetection(maps[data.mapId], char.x + 1, char.y)) {
+            if (char.x < 20 && !collisionDetection(maps[mapId], char.x + 1, char.y)) {
                 char.x++;
-            } else {
-                collision = true;
+                newCharPosition = true;
             }
         }
         if (data.key == "ArrowLeft") {
-            if (char.x > 1 && !collisionDetection(maps[data.mapId], char.x - 1, char.y)) {
+            if (char.x > 1 && !collisionDetection(maps[mapId], char.x - 1, char.y)) {
                 char.x--;
-            } else {
-                collision = true;
+                newCharPosition = true;
             }
         }
         if (data.key == "ArrowDown") {
-            if (char.y < 15 && !collisionDetection(maps[data.mapId], char.x, char.y + 1)) {
+            if (char.y < 15 && !collisionDetection(maps[mapId], char.x, char.y + 1)) {
                 char.y++;
-            } else {
-                collision = true;
+                newCharPosition = true;
             }
         }
         if (data.key == "ArrowUp") {
-            if (char.y > 1 && !collisionDetection(maps[data.mapId], char.x, char.y - 1)) {
+            if (char.y > 1 && !collisionDetection(maps[mapId], char.x, char.y - 1)) {
                 char.y--;
-            } else {
-                collision = true;
+                newCharPosition = true;
             }
         }
 
-        if (!collision) {
+        if (newCharPosition) {
             const retorno = { sid: socket.id, x: char.x, y: char.y };
-            socket.emit('moveAccept', retorno );
-            socket.broadcast.emit('moveAccept', retorno);
+            socket.emit('charMoved', retorno );
+            socket.to('map_'+mapId).emit('charMoved', retorno);
         }
     });
 
     socket.on('disconnect', () => {
         console.log(`> Player disconnected: ${socket.id}`)
         try {
-            // vou ter que armazenar a lista de maps por char, pra dar logout...
-            // const charInfo = chars[socket.id];
-
-
-            delete maps[1].chars[socket.id];
-            console.log(maps[1].chars, "after delete");
-
-            // if (charInfo) {
-            //     console.log(`> Player estava logado`)
-
-            //     if (findIdxInsideMap >= 0) {
-            //         maps[charInfo.map].chars.splice(findIdxInsideMap, 1);
-            //     }
-            //     delete chars[socket.id];
-
-            socket.broadcast.emit('offline', {sid : socket.id } );
-            // } else {
-            //     console.log(`> Player nem estava logado`)
-            // }
-            // delete chars[socket.id];
+            const mapId = 1;
+            delete maps[mapId].chars[socket.id];
+            socket.to('map_'+mapId).emit('charIsOffline', {sid : socket.id } );
         } catch(er) {
             console.log(er);
         }
@@ -96,7 +76,6 @@ io.on('connection', socket => {
     })
 
     socket.on('sendLogin', data => {
-        console.log(data);
         messages.push(data);
         const charPublicInfo = {
             sid:    socket.id,
@@ -106,18 +85,23 @@ io.on('connection', socket => {
             y:      Math.ceil(Math.random() * 5),
         }
 
-        maps[1].chars[socket.id] = charPublicInfo;
+        const mapId = 1;
+
+        const charPrivateInfo = { ... charPublicInfo };
+        charPrivateInfo.experience = 0;
+        charPrivateInfo.gold = 0;
+
+        maps[mapId].chars[socket.id] = charPublicInfo;
 
         const infoConectado = {
-            'charInfo': charPublicInfo,
-            'mapinfo': maps[1],
-            'chars': maps[1].chars
+            'charInfo': charPrivateInfo,
+            'mapinfo': maps[mapId]
         }
 
-        console.log("conectado", infoConectado);
-
-        socket.emit('conectado', infoConectado);
-        socket.broadcast.emit('newConnection', charPublicInfo);
+        socket.emit('youAreConnected', infoConectado);
+        socket.join('game');
+        socket.to('map_'+mapId).emit('newCharIsHere', charPublicInfo);
+        socket.join('map_'+mapId);
     });
 
 });
