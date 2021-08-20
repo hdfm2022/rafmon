@@ -8,6 +8,15 @@ map = {
         $("#map").hide();
         $("#map>div").remove();
     },
+    floor: {
+        append(itemId, item) {
+            let image = item.type;
+            if (item.status) {
+                image += "_"+item.status;
+            }
+            $("#map").append("<div data-type='"+item.type+"' class='floor' id='floor_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/items/"+image+".png' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
+        },
+    },
     item: {
         append(itemId, item) {
             let image = item.type;

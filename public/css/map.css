@@ -40,6 +40,12 @@ body {
     height: 40px;
 }
 
+.floor {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+}
+
 .item {
     transition: margin 200ms;
     position: fixed;

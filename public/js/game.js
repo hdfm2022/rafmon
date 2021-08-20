@@ -15,6 +15,11 @@ socket.on('youAreConnected', message => {
 
     map.connect();
 
+    for (const [floorId, floor] of Object.entries(message.mapinfo.floors)) {
+        console.log("append floor", floor);
+        map.floor.append(floorId, floor);
+    }
+
     for (const [charSid, char] of Object.entries(message.mapinfo.chars)) {
         map.char.append(char);
     }
