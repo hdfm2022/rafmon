@@ -25,7 +25,12 @@ app.use('/', (req, res) => {
 });
 
 io.on('connection', socket => {
-    console.log(`socket conectado ${socket.id}`);
+    console.log(`> Socket connected: ${socket.id}`)
+
+    socket.on('subscribeLogger', data=> {
+        console.log("subscribeLogger");
+        socket.join('logger');
+    });
 
     socket.on('move', data => {
         let newCharPosition = false;
@@ -100,15 +105,17 @@ io.on('connection', socket => {
             const retorno = { sid: socket.id, x: char.x, y: char.y };
             socket.emit('charMoved', retorno);
             socket.to('map_' + mapId).emit('charMoved', retorno);
+            socket.to('logger').emit('logg', {'type' :"charMoved", 'mapId' : mapId, "data": retorno } );
         }
     });
 
 
     socket.on('disconnect', () => {
-        console.log(`> Player disconnected: ${socket.id}`)
+        console.log(`> Socket disconnected: ${socket.id}`)
         try {
             const mapId = mapIdsBySocketId[socket.id];
             if (mapId) {
+                console.log(`>> Player disconnected: ${socket.id}`)
                 if (maps[mapId].chars[socket.id]) {
                     delete maps[mapId].chars[socket.id];
                     delete mapIdsBySocketId[socket.id];
