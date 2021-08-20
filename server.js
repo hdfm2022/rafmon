@@ -76,8 +76,12 @@ io.on('connection', socket => {
                 charDisappearInMap(mapId, socket);
 
                 mapId = portal.nextMap;
-                char.x = portal.nextX;
-                char.y = portal.nextY;
+                if (data.key == "ArrowRight") char.x += 2;
+                if (data.key == "ArrowLeft")  char.x -= 2;
+                if (data.key == "ArrowDown")  char.y += 2;
+                if (data.key == "ArrowUp")    char.y -= 2;
+                // char.x = portal.nextX;
+                // char.y = portal.nextY;
                 
                 charAppearInMap(mapId, socket, charPublicInfo);
             }
