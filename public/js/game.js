@@ -11,6 +11,7 @@ socket.on('disconnect', () => {
 socket.on('youAreConnected', message => {
     console.log("youAreConnected");
     conectado = true;
+    mapId = message.mapId;
     myOwnChar = new Char(message.charInfo);
 
     map.connect();
@@ -34,11 +35,12 @@ socket.on('charMoved', data => {
     map.char.move(data.sid, data.x, data.y);
 });
 
-socket.on('charIsOffline', message => {
-    map.char.offline(message.sid);
+socket.on('charIsOutsideThisMap', message => {
+    map.char.remove(message.sid);
 });
 
 socket.on('newCharIsHere', newCharVisible => {
+    console.log('newCharIsHere', newCharVisible);
     if (!conectado) {
         return false;
     }

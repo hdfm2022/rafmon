@@ -5,10 +5,16 @@ collisionDetection = (mapInfo, newX, newY) => {
         }
     };
 
-    
     for (const [key, item] of Object.entries(mapInfo.items)) {
         if (item.y == newY && item.x == newX) {
             return { type: 'item_collision', item: key };
+        }
+    };
+
+    for (const [key, floor] of Object.entries(mapInfo.floors)) {
+        if (floor.type == "portal" && floor.y == newY && floor.x == newX) {
+            console.log("portaL-collision");
+            return { type: 'portal_collision', floor: key };
         }
     };
     return false;
