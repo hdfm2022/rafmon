@@ -63,3 +63,13 @@ socket.on('itemBroked', data => {
 socket.on('itemClosed', data => {
     map.item.closed(data.id);
 });
+
+socket.on('startKamehame', data => {
+    console.log('startKamehame', data);
+    map.kamehame.start(data);
+})
+
+socket.on('endKamehame', data => {
+    console.log('endKamehame', data);
+    map.kamehame.end(data);
+})

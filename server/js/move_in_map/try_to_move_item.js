@@ -71,7 +71,6 @@ function tryToMoveItem(mapId, itemId, movimentTried, socket, map) {
         });
 
 
-
         if (testAllStones) {
             let closedRightNow = true;
             map.items.forEach(item => {

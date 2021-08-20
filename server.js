@@ -3,11 +3,13 @@ global.mapIdsBySocketId = [];
 
 const express = require('express');
 const path = require('path');
+
 const collisionDetection = require('./server/js/move_in_map/collision_detection');
-const init_map = require('./server/js/init_map');
 const charAppearInMap = require('./server/js/in_out_map/char_appear_in_map');
 const charDisappearInMap = require('./server/js/in_out_map/char_disappear_in_map');
 const tryToMoveItem = require('./server/js/move_in_map/try_to_move_item');
+const startKamehame = require('./server/js/skills/start_kamehameha');
+const endKamehame = require('./server/js/skills/end_kamehameha');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -122,9 +124,12 @@ io.on('connection', socket => {
 
     socket.on('endKamehame', data => {
         console.log('endKamehame');
+        endKamehame(socket)
+        
     });
     socket.on('startKamehame', data => {
         console.log('startKamehame');
+        startKamehame(socket)
     });
 
     socket.on('sendLogin', data => {

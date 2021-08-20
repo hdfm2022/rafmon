@@ -52,3 +52,37 @@ body {
     width: 40px;
     height: 40px;
 }
+
+.kamehameha {
+    background: yellow;
+    position: fixed;
+    margin-top: -24px;
+    margin-left: 15px;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+    border: solid 1px yellowgreen;
+
+    -webkit-animation-name: fadeIn;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+    animation-name: fadeIn;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes fadeIn { 
+    0% { opacity: 0.3; }
+    25% { opacity: 0.6; }
+    50% { opacity: 1; }
+    75% { opacity: 0.6; }
+    100% { opacity: 0.3; }
+  }
+  
+  @keyframes fadeIn {
+    0% { opacity: 0.3; }
+    25% { opacity: 0.6; }
+    50% { opacity: 1; }
+    75% { opacity: 0.6; }
+    100% { opacity: 0.3; }
+  }
