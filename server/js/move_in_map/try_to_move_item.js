@@ -49,6 +49,8 @@ function tryToMoveItem(mapId, itemId, movimentTried, socket, map) {
         setTimeout(() => {
             tryToMoveItem(mapId, itemId, movimentTried, socket, map)
         }, 200);
+    } else {
+        // check if switch is closed
     }
 }
 

@@ -3,11 +3,11 @@ global.mapIdsBySocketId = [];
 
 const express = require('express');
 const path = require('path');
-const collisionDetection = require('./server/js/collision_detection');
+const collisionDetection = require('./server/js/move_in_map/collision_detection');
 const init_map = require('./server/js/init_map');
 const charAppearInMap = require('./server/js/in_out_map/char_appear_in_map');
 const charDisappearInMap = require('./server/js/in_out_map/char_disappear_in_map');
-const tryToMoveItem = require('./server/js/try_to_move_item');
+const tryToMoveItem = require('./server/js/move_in_map/try_to_move_item');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -21,11 +21,6 @@ app.set('view.engine', 'html');
 app.use('/', (req, res) => {
     res.render('index.html');
 });
-
-console.log("server is live");
-
-maps[1] = init_map(1);
-
 
 io.on('connection', socket => {
     console.log(`socket conectado ${socket.id}`);
@@ -107,12 +102,14 @@ io.on('connection', socket => {
         console.log(`> Player disconnected: ${socket.id}`)
         try {
             const mapId = mapIdsBySocketId[socket.id];
-            if (maps[mapId].chars[socket.id]) {
-                delete maps[mapId].chars[socket.id];
-                delete mapIdsBySocketId[socket.id];
-                socket.to('map_' + mapId).emit('charIsOutsideThisMap', { sid: socket.id });
+            if (mapId) {
+                if (maps[mapId].chars[socket.id]) {
+                    delete maps[mapId].chars[socket.id];
+                    delete mapIdsBySocketId[socket.id];
+                    socket.to('map_' + mapId).emit('charIsOutsideThisMap', { sid: socket.id });
 
-                maps[mapId].on--;
+                    maps[mapId].on--;
+                } 
             }
         } catch (er) {
             console.log(er);
@@ -167,3 +164,4 @@ io.on('connection', socket => {
 
 
 server.listen(3001);
+console.log("server is live - 3001");

@@ -13,7 +13,7 @@ collisionDetection = (mapInfo, newX, newY) => {
 
     for (const [key, floor] of Object.entries(mapInfo.floors)) {
         if (floor.type == "portal" && floor.y == newY && floor.x == newX) {
-            console.log("portaL-collision");
+            console.log("portal-collision");
             return { type: 'portal_collision', floor: key };
         }
     };
