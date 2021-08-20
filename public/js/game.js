@@ -43,3 +43,7 @@ socket.on('newCharIsHere', newCharVisible => {
 socket.on('itemMoved', data => {
     map.item.move(data.id, data.x, data.y);
 });
+
+socket.on('itemBroked', data => {
+    map.item.broked(data.id);
+});

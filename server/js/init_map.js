@@ -3,8 +3,8 @@ function init_map(mapId) {
         case 1:
             return {
                 on:0, chars: {}, items: [
-                    { type: 'stone.png', x: 6, y: 6 }
-                    , { type: 'stone.png', x: 8, y: 12 }
+                    { type: 'stone', x: 6, y: 6, status: "" }
+                    , { type: 'stone', x: 8, y: 12, status: "" }
                 ]
             };
         default:

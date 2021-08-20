@@ -62,8 +62,10 @@ io.on('connection', socket => {
 
         if (collisionResult instanceof Object) {
             if (collisionResult.type == "item_collision") {
-                if (maps[mapId].items[collisionResult.item].type == "stone.png") {
-                    tryToMoveItem(mapId, collisionResult.item, data.key);
+                if (maps[mapId].items[collisionResult.item].type == "stone") {
+                    if (maps[mapId].items[collisionResult.item].status == "") {
+                        tryToMoveItem(mapId, collisionResult.item, data.key);
+                    }
                 }
             }
         }
@@ -107,6 +109,14 @@ io.on('connection', socket => {
                 item.y--;
                 newItemPosition = true;
             }
+        }
+
+        if (collisionResult === true) {
+            item.status = "broked";
+            const retorno = { id: itemId };
+
+            socket.emit('itemBroked', retorno );
+            socket.to('map_'+mapId).emit('itemBroked', retorno);
         }
 
         if (newItemPosition) {

@@ -10,11 +10,19 @@ map = {
     },
     item: {
         append(itemId, item) {
-            $("#map").append("<div class='item' id='item_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/items/"+item.type+"' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
+            let image = item.type;
+            if (item.status) {
+                image += "_"+item.status;
+            }
+            $("#map").append("<div data-type='"+item.type+"' class='item' id='item_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/items/"+image+".png' style='width:32px; height:32px; margin-top: 4px; margin-left: 4px;'></div>");
         },
         move(itemId, x, y) {
             $("#item_" + itemId).css("margin-left", (((x - 1) * 40)) + "px");
             $("#item_" + itemId).css("margin-top", (((y - 1) * 40)) + "px");
+        },
+        broked(itemId) {
+            const type = $("#item_"+itemId).data("type");
+            $("#item_"+itemId + " img").attr("src", "img/items/"+type+"_broked.png")
         }
     },
     char: {
