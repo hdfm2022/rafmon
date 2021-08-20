@@ -10,11 +10,9 @@ function charAppearInMap(mapId, socket, charPublicInfo) {
     }
 
     maps[mapId].on++;
-    console.log(maps[mapId].on, "onlines");
     maps[mapId].chars[socket.id] = charPublicInfo;
 
     mapIdsBySocketId[socket.id] = mapId;
-    // console.log(maps);
 
     const infoConectado = {
         'charInfo': charPrivateInfo,

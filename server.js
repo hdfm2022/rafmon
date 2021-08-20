@@ -6,6 +6,7 @@ const path = require('path');
 const collisionDetection = require('./server/js/collision_detection');
 const init_map = require('./server/js/init_map');
 const charAppearInMap = require('./server/js/in_out_map/char_appear_in_map');
+const charDisappearInMap = require('./server/js/in_out_map/char_disappear_in_map');
 const tryToMoveItem = require('./server/js/try_to_move_item');
 
 const app = express();
@@ -32,17 +33,16 @@ io.on('connection', socket => {
     socket.on('move', data => {
         let newCharPosition = false;
         let collisionResult = false;
-        let mapId = data.mapId;
+        let mapId = mapIdsBySocketId[socket.id];
 
-        const map = maps[data.mapId];
-        const char = maps[data.mapId].chars[socket.id];
+        const map = maps[mapId];
+        const char = map.chars[socket.id];
 
         if (!char) {
             console.log("problema");
             console.log("map", map);
             return true;
         }
-        
 
         if (data.key == "ArrowRight") {
             collisionResult = collisionDetection(map, char.x + 1, char.y);
@@ -76,17 +76,11 @@ io.on('connection', socket => {
         if (collisionResult instanceof Object) {
             if (collisionResult.type == "portal_collision") {
                 const portal = map.floors[collisionResult.floor];
-                console.log("portal entrar", portal);
-
                 const charPublicInfo = map.chars[socket.id];
-                delete map.chars[socket.id];
-                socket.to('map_' + mapId).emit('charIsOutsideThisMap', { sid: socket.id });
-                socket.leave('map_' + mapId);
 
-                map.on--;
+                charDisappearInMap(mapId, socket);
 
                 mapId = portal.nextMap;
-                newCharPosition = true;
                 char.x = portal.nextX;
                 char.y = portal.nextY;
                 

@@ -9,17 +9,16 @@
             keyPressed = checkAtalhoKeyPressed(keyPressed);
 
             if (keyPressed === "ArrowRight" || keyPressed === "ArrowLeft" || keyPressed === "ArrowUp" || keyPressed === "ArrowDown") {
-                console.log('movement', keyPressed);
+                // console.log('movement', keyPressed);
                 const messageObject = {
-                    key: keyPressed,
-                    mapId
+                    key: keyPressed
                 }
                 socket.emit('move', messageObject);
             } else {
-                console.warn('unknow key', keyPressed);
+                // console.warn('unknow key', keyPressed);
             }
         }
-        console.warn('pressed key', event.keyCode, event.key);
+        // console.warn('pressed key', event.keyCode, event.key);
     }
 
     function checkAtalhoKeyPressed(keyPressed) {
