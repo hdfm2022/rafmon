@@ -20,7 +20,7 @@ map = {
                 extension = "gif";
             }
             $("#map").append("<div data-type='"+item.type+"' class='floor' id='floor_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/floors/"+image+"."+extension+"' style='width:32px; height:32px; margin-top: 3px; margin-left: 3px;'></div>");
-        },
+        }
     },
     item: {
         append(itemId, item) {
@@ -37,6 +37,10 @@ map = {
         broked(itemId) {
             const type = $("#item_"+itemId).data("type");
             $("#item_"+itemId + " img").attr("src", "img/items/"+type+"_broked.png")
+        },
+        closed(itemId) {
+            const type = $("#item_"+itemId).data("type");
+            $("#item_"+itemId + " img").attr("src", "img/items/"+type+"_closed.png")
         }
     },
     char: {

@@ -31,6 +31,11 @@ socket.on('youAreConnected', message => {
     }
 });
 
+socket.on('newFloorAppeared', data => {
+    console.log("newFloor", data);
+    map.floor.append(data.id, data.floor);
+});
+
 socket.on('charMoved', data => {
     map.char.move(data.sid, data.x, data.y);
 });
@@ -53,4 +58,8 @@ socket.on('itemMoved', data => {
 
 socket.on('itemBroked', data => {
     map.item.broked(data.id);
+});
+
+socket.on('itemClosed', data => {
+    map.item.closed(data.id);
 });
