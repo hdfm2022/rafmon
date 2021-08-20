@@ -86,7 +86,7 @@ map = {
         },
         end(data) {
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_blue_128x128.gif");
-            // $("#map #char_"+data.sid + " .kamehameha").remove();
+            $("#map #char_"+data.sid + " .kamehameha").remove();
         }
     }
 }
