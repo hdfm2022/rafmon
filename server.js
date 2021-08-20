@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const CollisionDetection = require('./server/collision_detection');
+const collisionDetection = require('./server/collision_detection');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -22,8 +22,6 @@ const chars = [];
 const maps = [];
 maps[1] = { chars: {} };
 
-const collisionDetection = new CollisionDetection(chars);
-
 io.on('connection', socket => {
     console.log(`socket conectado ${socket.id}`);
 
@@ -32,31 +30,37 @@ io.on('connection', socket => {
 
         const char = maps[data.mapId].chars[socket.id];
 
-        console.log("move", data);
         if (data.key == "ArrowRight") {
-            if (char.x < 20 && !collisionDetection.check(maps[data.mapId], char.x + 1, char.y)) {
+            if (char.x < 20 && !collisionDetection(maps[data.mapId], char.x + 1, char.y)) {
                 char.x++;
+            } else {
+                collision = true;
             }
         }
         if (data.key == "ArrowLeft") {
-            if (char.x > 1 && !collisionDetection.check(maps[data.mapId], char.x - 1, char.y)) {
+            if (char.x > 1 && !collisionDetection(maps[data.mapId], char.x - 1, char.y)) {
                 char.x--;
+            } else {
+                collision = true;
             }
         }
         if (data.key == "ArrowDown") {
-            if (char.y < 15 && !collisionDetection.check(maps[data.mapId], char.x, char.y + 1)) {
+            if (char.y < 15 && !collisionDetection(maps[data.mapId], char.x, char.y + 1)) {
                 char.y++;
+            } else {
+                collision = true;
             }
         }
         if (data.key == "ArrowUp") {
-            if (char.y > 1 && !collisionDetection.check(maps[data.mapId], char.x, char.y - 1)) {
+            if (char.y > 1 && !collisionDetection(maps[data.mapId], char.x, char.y - 1)) {
                 char.y--;
+            } else {
+                collision = true;
             }
         }
 
         if (!collision) {
             const retorno = { sid: socket.id, x: char.x, y: char.y };
-            console.log("moveAccept", retorno );
             socket.emit('moveAccept', retorno );
             socket.broadcast.emit('moveAccept', retorno);
         }
