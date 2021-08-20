@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const collisionDetection = require('./server/collision_detection');
+const collisionDetection = require('./server/js/collision_detection');
+const init_map = require('./server/js/init_map');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -18,11 +19,7 @@ app.use('/', (req, res) => {
 console.log("server is live");
 
 var maps = [];
-maps[1] = { chars: {}, items: [
-      {type: 'stone.png', x: 6, y: 6}
-    , {type: 'stone.png', x: 8, y: 12}
-] 
-};
+maps[1] = init_map(1);
 
 io.on('connection', socket => {
     console.log(`socket conectado ${socket.id}`);
@@ -66,7 +63,6 @@ io.on('connection', socket => {
         if (collisionResult instanceof Object) {
             if (collisionResult.type == "item_collision") {
                 if (maps[mapId].items[collisionResult.item].type == "stone.png") {
-                    console.log("stone move!");
                     tryToMoveItem(mapId, collisionResult.item, data.key);
                 }
             }
@@ -82,8 +78,6 @@ io.on('connection', socket => {
     function tryToMoveItem(mapId, itemId, movimentTried) {
         let newItemPosition = false;
 
-        console.log("try get item", mapId, itemId);
-        console.log(maps);
         const item = maps[mapId].items[itemId];
 
         if (movimentTried == "ArrowRight") {
@@ -130,8 +124,13 @@ io.on('connection', socket => {
         console.log(`> Player disconnected: ${socket.id}`)
         try {
             const mapId = 1;
-            delete maps[mapId].chars[socket.id];
-            socket.to('map_'+mapId).emit('charIsOffline', {sid : socket.id } );
+            if (maps[mapId].chars[socket.id]) {
+                delete maps[mapId].chars[socket.id];
+                socket.to('map_'+mapId).emit('charIsOffline', {sid : socket.id } );
+                
+                maps[mapId].on--;
+                console.log(maps[mapId].on, "onlines");
+            }
         } catch(er) {
             console.log(er);
         }
@@ -153,11 +152,17 @@ io.on('connection', socket => {
         charPrivateInfo.experience = 0;
         charPrivateInfo.gold = 0;
 
+        if (maps[mapId].on == 0) {
+            maps[mapId] = init_map(mapId);
+        }
+
+        maps[mapId].on++;
+        console.log(maps[mapId].on, "onlines");
         maps[mapId].chars[socket.id] = charPublicInfo;
 
         const infoConectado = {
             'charInfo': charPrivateInfo,
-            'mapinfo': maps[mapId]
+            'mapinfo':  maps[mapId]
         }
 
         socket.emit('youAreConnected', infoConectado);
