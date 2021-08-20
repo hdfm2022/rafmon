@@ -87,8 +87,6 @@ io.on('connection', socket => {
                 if (data.key == "ArrowLeft")  char.x -= 2;
                 if (data.key == "ArrowDown")  char.y += 2;
                 if (data.key == "ArrowUp")    char.y -= 2;
-                // char.x = portal.nextX;
-                // char.y = portal.nextY;
                 
                 charAppearInMap(mapId, socket, charPublicInfo);
             }
@@ -119,7 +117,9 @@ io.on('connection', socket => {
                 if (maps[mapId].chars[socket.id]) {
                     delete maps[mapId].chars[socket.id];
                     delete mapIdsBySocketId[socket.id];
-                    socket.to('map_' + mapId).emit('charIsOutsideThisMap', { sid: socket.id });
+                    const data = { sid: socket.id };
+                    socket.to('map_' + mapId).emit('charIsOutsideThisMap', data);
+                    socket.to('logger').emit('logg', {'type' :"charIsOutsideThisMap", 'mapId' : mapId, "data": data } );
 
                     maps[mapId].on--;
                 } 
