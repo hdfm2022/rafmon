@@ -120,6 +120,13 @@ io.on('connection', socket => {
         }
     })
 
+    socket.on('endKamehame', data => {
+        console.log('endKamehame');
+    });
+    socket.on('startKamehame', data => {
+        console.log('startKamehame');
+    });
+
     socket.on('sendLogin', data => {
         const charPublicInfo = {
             sid: socket.id,
@@ -129,38 +136,6 @@ io.on('connection', socket => {
             y: 1,
         }
         charAppearInMap(1, socket, charPublicInfo);
-
-        // const charPublicInfo = {
-        //     sid: socket.id,
-        //     login: data.username,
-        //     nivel: 1,
-        //     x: Math.ceil(Math.random() * 5),
-        //     y: Math.ceil(Math.random() * 5),
-        // }
-
-        // const mapId = 1;
-
-        // const charPrivateInfo = { ...charPublicInfo };
-        // charPrivateInfo.experience = 0;
-        // charPrivateInfo.gold = 0;
-
-        // if (maps[mapId].on == 0) {
-        //     maps[mapId] = init_map(mapId);
-        // }
-
-        // maps[mapId].on++;
-        // console.log(maps[mapId].on, "onlines");
-        // maps[mapId].chars[socket.id] = charPublicInfo;
-
-        // const infoConectado = {
-        //     'charInfo': charPrivateInfo,
-        //     'mapinfo': maps[mapId]
-        // }
-
-        // socket.emit('youAreConnected', infoConectado);
-        // socket.join('game');
-        // socket.to('map_' + mapId).emit('newCharIsHere', charPublicInfo);
-        // socket.join('map_' + mapId);
     });
 
 });

@@ -1,3 +1,13 @@
+    function handleKeyup(event) {
+        let keyPressed = event.key;
+
+       if (keyPressed === "z") {
+            console.log("end kamehameha");
+            myOwnChar.kamehameha = 0;
+            socket.emit('endKamehame', {});
+       }
+    }
+    
     function handleKeydown(event) {
         // f1 - f12
         if (event.keyCode >= 112 && event.keyCode <= 123) { 
@@ -14,6 +24,12 @@
                     key: keyPressed
                 }
                 socket.emit('move', messageObject);
+            } else if (keyPressed === "z") {
+                if (myOwnChar.kamehameha == 0) {
+                    myOwnChar.kamehameha = 1;
+                    console.log("start kamehameha");
+                    socket.emit('startKamehame', {});
+                }
             } else {
                 // console.warn('unknow key', keyPressed);
             }
@@ -32,3 +48,4 @@
     }
 
     document.addEventListener('keydown', handleKeydown);
+    document.addEventListener('keyup', handleKeyup);

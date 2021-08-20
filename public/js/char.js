@@ -6,5 +6,8 @@ class Char {
         this.y = charInfo.y;
         this.experience = charInfo.experience;
         this.gold = charInfo.gold;
+
+        // skills
+        this.kamehameha = 0;
     }
 }
