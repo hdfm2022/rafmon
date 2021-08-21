@@ -58,14 +58,21 @@ map = {
         }
     },
     kamehame: {
+        isActive: false,
+        size: 14,
+
         start(data) {
+            // ta errado, pq ta unico. pode ter 2 kamehameha ao mesmo tempo...
+            console.error("arrumar ta errado, pq ta unico. pode ter 2 kamehameha ao mesmo tempo...");
+            map.kamehame.isActive = true;
+            map.kamehame.size = 12;
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_red_128x128.gif");
             $("#map #char_"+data.sid).append("<div data-size='12' class='kamehameha'>&nbsp;</div>");
             setTimeout( () => { map.kamehame.grown(data) }, 1000 );
         },
         grown(data) {
             const kamediv = $("#map #char_"+data.sid +" .kamehameha");
-            if ($(kamediv).data("size")) {
+            if (map.kamehame.isActive) {
                 let actualsize = $(kamediv).data("size");
                 actualsize += 2;
                 console.log(actualsize, "size atual");
@@ -85,6 +92,7 @@ map = {
             }
         },
         end(data) {
+            map.kamehame.isActive = false;
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_blue_128x128.gif");
             $("#map #char_"+data.sid + " .kamehameha").remove();
         }
