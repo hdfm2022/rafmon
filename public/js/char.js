@@ -7,6 +7,9 @@ class Char {
         this.experience = charInfo.experience;
         this.gold = charInfo.gold;
 
+        // ultima vez que fez algo no server
+        this.lastActivity = 0;
+
         // skills
         this.kamehameha = 0;
     }

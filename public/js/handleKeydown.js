@@ -18,16 +18,14 @@ function handleKeydown(event) {
 
         keyPressed = checkAtalhoKeyPressed(keyPressed);
 
+        myOwnChar.lastActivity = Date.now();
+
         if (keyPressed === "ArrowRight" || keyPressed === "ArrowLeft" || keyPressed === "ArrowUp" || keyPressed === "ArrowDown") {
             // console.log('movement', keyPressed);
-            if (map.kamehame.isActive == true) {
-                
-            } else {
-                const messageObject = {
-                    key: keyPressed
-                }
-                socket.emit('move', messageObject);
+            const messageObject = {
+                key: keyPressed
             }
+            socket.emit('move', messageObject);
         } else if (keyPressed === "z") {
             if (myOwnChar.kamehameha == 0) {
                 myOwnChar.kamehameha = 1;
