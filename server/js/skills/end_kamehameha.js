@@ -1,4 +1,3 @@
-
 endKamehame = (socket) => {
     const mapId = mapIdsBySocketId[socket.id];
 

@@ -61,12 +61,13 @@ map = {
 
         start(data) {
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_red_128x128.gif");
-            $("#map #char_"+data.sid).append("<div data-size='12' class='kamehameha'>&nbsp;</div>");
+            $("#map #char_"+data.sid +" .kamehameha").remove(); // just in case
+            $("#map #char_"+data.sid).append("<div data-size='12' data-shoot='0' class='kamehameha kamepiscando'>&nbsp;</div>");
             setTimeout( () => { map.kamehame.grown(data) }, 1000 );
         },
         grown(data) {
             const kamediv = $("#map #char_"+data.sid +" .kamehameha");
-            if ($(kamediv).data("size")) {
+            if ($(kamediv).data("size") && $(kamediv).data("shoot") == "0") {
                 let actualsize = $(kamediv).data("size");
                 actualsize += 2;
                 console.log(actualsize, "size atual");
@@ -84,6 +85,31 @@ map = {
                     setTimeout( () => { map.kamehame.grown(data) } , 1000 );
                 }
             }
+        },
+        stop(data) {
+            console.log("STOPOU KAME!");
+            //const kamediv = $("#map #char_"+data.sid +" .kamehameha");
+            //$("#map #char_"+data.sid + " .kamehameha").css('margin-left', (26 + 10 + 40) + "px");
+        },
+        going(data) {
+
+            const kamediv = $("#map #char_"+data.sid +" .kamehameha");
+            // width, height depende...
+            const actualsize = $(kamediv).data("size");
+            const width = actualsize + 40 * (data.kamehame.x2 - data.kamehame.x1);
+            const marginleft = (20 - (actualsize/2)) + (40 * (data.kamehame.x1 - data.kamehame.cx));
+
+            console.log(data, width, marginleft);
+
+            $(kamediv).css('width', (width) + "px");
+            $(kamediv).css('margin-left', (marginleft) + "px");
+        },
+        shoot(data) {
+            const kamediv = $("#map #char_"+data.sid +" .kamehameha");
+            $(kamediv).data("shoot", 1);
+            $(kamediv).removeClass("kamepiscando");
+            const actualsize = $(kamediv).data("size");
+            $(kamediv).css('width', (actualsize + 10) + "px");
         },
         end(data) {
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_blue_128x128.gif");

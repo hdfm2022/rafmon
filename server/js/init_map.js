@@ -1,9 +1,9 @@
 function init_map(mapId) {
+    const baseMap = { kamehames: [], on: 0, chars: {} };
     switch (mapId) {
         case 1:
             return {
-                on: 0
-                , chars: {}
+                ...baseMap
                 , items: [
 
                 ]
@@ -13,8 +13,7 @@ function init_map(mapId) {
             };
         case 2:
             return {
-                on: 0
-                , chars: {}
+                ...baseMap
                 , items: [
                       { type: 'stone', x: 6, y: 6, status: "" }
                     , { type: 'stone', x: 8, y: 12, status: "" }
@@ -28,14 +27,16 @@ function init_map(mapId) {
             };
         case 3:
             return {
-                on: 0, chars: {}, items: []
+                ...baseMap
+                , items: []
                 , floors: [
                       { type: 'portal', x: 9, y: 13, nextMap: 2 }
                 ]
             };
         default:
-            return {
-                on: 0, chars: {}, items: []
+            return {    
+                ...baseMap
+                , items: []
                 , floors: [
 
                 ]

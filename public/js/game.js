@@ -73,3 +73,18 @@ socket.on('endKamehame', data => {
     console.log('endKamehame', data);
     map.kamehame.end(data);
 })
+
+socket.on('shootKamehame', data => {
+    console.log('shootKamehame', data);
+    map.kamehame.shoot(data);
+});
+
+socket.on('goingKamehameha', data => {
+    console.log('goingKamehameha', data);
+    map.kamehame.going(data);
+});
+
+socket.on('stoptKamehame', data => {
+    console.log('stoptKamehame', data);
+    map.kamehame.stop(data);
+});

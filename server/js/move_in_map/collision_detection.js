@@ -1,4 +1,12 @@
 collisionDetection = (mapInfo, newX, newY) => {
+    if (newX > 20) {
+        return { type: 'map_collision' };
+    }
+    
+    if (newY > 15) {
+        return { type: 'map_collision' };
+    }
+
     for (const [key, otherChar] of Object.entries(mapInfo.chars)) {
         if (otherChar.y == newY && otherChar.x == newX) {
             return true;

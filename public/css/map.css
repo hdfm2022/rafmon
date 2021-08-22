@@ -62,7 +62,9 @@ body {
     height: 12px;
     border-radius: 12px;
     border: solid 1px yellowgreen;
+}
 
+.kamepiscando {
     -webkit-animation-name: fadeIn;
     -webkit-animation-duration: 1s;
     -webkit-animation-iteration-count: infinite;

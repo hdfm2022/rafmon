@@ -1,10 +1,10 @@
 function handleKeyup(event) {
     let keyPressed = event.key;
 
-    if (keyPressed === "z") {
-        console.log("end kamehameha");
-        myOwnChar.kamehameha = 0;
-        socket.emit('endKamehame', {});
+    if (keyPressed === "1" && myOwnChar.kamehameha === 1) {
+        console.log("shoot kamehameha");
+        myOwnChar.kamehameha = 2;
+        socket.emit('shootKamehame', {});
     }
 }
 
@@ -22,18 +22,37 @@ function handleKeydown(event) {
 
         if (keyPressed === "ArrowRight" || keyPressed === "ArrowLeft" || keyPressed === "ArrowUp" || keyPressed === "ArrowDown") {
             // console.log('movement', keyPressed);
-            const messageObject = {
-                key: keyPressed
+            if (myOwnChar.kamehameha !== 2) {
+                if (event.ctrlKey) {
+                    console.log("so virar de lado");
+                } else {
+                    const messageObject = {
+                        key: keyPressed
+                    }
+                    socket.emit('move', messageObject);
+                }
+            } else {
+                console.warn("nao pode mexer");
             }
-            socket.emit('move', messageObject);
-        } else if (keyPressed === "z") {
-            if (myOwnChar.kamehameha == 0) {
+        } else if (keyPressed === "1") {
+            if (myOwnChar.kamehameha === 0) {
                 myOwnChar.kamehameha = 1;
                 console.log("start kamehameha");
                 socket.emit('startKamehame', {});
             }
+        } else if (keyPressed === "Escape") {
+            if (myOwnChar.kamehameha === 1) {
+                console.log("end kamehameha");
+                myOwnChar.kamehameha = 0;
+                socket.emit('endKamehame', {});
+            }
+            if (myOwnChar.kamehameha === 2) {
+                console.log("stop kamehameha");
+                myOwnChar.kamehameha = 0;
+                socket.emit('stopKamehame', {});
+            }
         } else {
-            // console.warn('unknow key', keyPressed);
+            console.warn('unknow key', keyPressed);
         }
     }
     // console.warn('pressed key', event.keyCode, event.key);
