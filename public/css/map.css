@@ -47,8 +47,7 @@ body {
 }
 
 .item {
-    transition: margin 200ms;
-    transition: opacity 800ms;
+    transition: opacity 800ms, margin 210ms;
     position: fixed;
     width: 40px;
     height: 40px;

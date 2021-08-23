@@ -74,13 +74,10 @@ nextShootKamehameTimer = (socket, direction) => {
             case "bottom": y++; break;
         }
         
-        const collisionResult = collisionDetection(map, x, y);
+        let collisionResult = collisionDetection(map, x, y);
 
-        if (collisionResult === false) {
-            if (direction == "right") {
-                kamehame.x2++;
-            }
-        } else {
+        // mesmo tendo colisão, pode ser que depois ele tira a colisão, empurrando a pedra junto com o golpe
+        if (collisionResult !== false) {
             kamehame.hasCollision = true;
 
             if (collisionResult instanceof Object) {
@@ -97,7 +94,7 @@ nextShootKamehameTimer = (socket, direction) => {
                             socket.to('map_' + mapId).emit('itemVanished', retorno);
 
                             kamehame.hasCollision = false;
-                            
+
                         } else if (kamehame.size >= 20) {
                             item.status = "broked";
                             const retorno = { id: collisionResult.item };
@@ -109,6 +106,7 @@ nextShootKamehameTimer = (socket, direction) => {
                                 const mexeuOItem = tryToMoveItem(mapId, collisionResult.item, "ArrowRight", socket, map);
                                 if (mexeuOItem) {
                                     kamehame.hasCollision = false;
+                                    collisionResult = false;
                                 }
                             }
                         }
@@ -116,17 +114,15 @@ nextShootKamehameTimer = (socket, direction) => {
                     }
                 }
             }
+        }
 
-            if (kamehame.hasCollision == true) {
-                switch(direction) {
-                    case "right":  x--; break;
-                    case "left":   x++; break;
-                    case "top":    y++; break;
-                    case "bottom": y--; break;
-                }
+        if (collisionResult === false) {
+            if (direction == "right") {
+                kamehame.x2++;
             }
         }
     }
+
 
     // se não chegou no final o golpe, ainda aumenta ele...
     if (kamehame.x1 <= kamehame.x2 && kamehame.y1 <= kamehame.y2) {
