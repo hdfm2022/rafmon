@@ -48,12 +48,14 @@ body {
 
 .item {
     transition: margin 200ms;
+    transition: opacity 800ms;
     position: fixed;
     width: 40px;
     height: 40px;
 }
 
 .kamehameha {
+    transition: 210ms;
     background: yellow;
     position: fixed;
     margin-top: -24px;
@@ -62,6 +64,7 @@ body {
     height: 12px;
     border-radius: 12px;
     border: solid 1px yellowgreen;
+    opacity: 0.6;
 }
 
 .kamepiscando {

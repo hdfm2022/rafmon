@@ -88,6 +88,7 @@ function tryToMoveItem(mapId, itemId, movimentTried, socket, map) {
             }
         }
     }
+    return newItemPosition;
 }
 
 module.exports = tryToMoveItem;

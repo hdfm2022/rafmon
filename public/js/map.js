@@ -38,6 +38,9 @@ map = {
             const type = $("#item_"+itemId).data("type");
             $("#item_"+itemId + " img").attr("src", "img/items/"+type+"_broked.png")
         },
+        vanished(itemId) {
+            $("#item_"+itemId + "").css("opacity", 0);
+        },
         closed(itemId) {
             const type = $("#item_"+itemId).data("type");
             $("#item_"+itemId + " img").attr("src", "img/items/"+type+"_closed.png")
@@ -61,12 +64,12 @@ map = {
 
         start(data) {
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_red_128x128.gif");
-            $("#map #char_"+data.sid +" .kamehameha").remove(); // just in case
-            $("#map #char_"+data.sid).append("<div data-size='12' data-shoot='0' class='kamehameha kamepiscando'>&nbsp;</div>");
+            $("#map #kamehameha_"+data.sid).remove(); // just in case
+            $("#map #char_"+data.sid).append("<div id='kamehameha_"+data.sid+"' data-size='12' data-shoot='0' class='kamehameha kamepiscando'>&nbsp;</div>");
             setTimeout( () => { map.kamehame.grown(data) }, 1000 );
         },
         grown(data) {
-            const kamediv = $("#map #char_"+data.sid +" .kamehameha");
+            const kamediv = $("#map #kamehameha_"+data.sid);
             if ($(kamediv).data("size") && $(kamediv).data("shoot") == "0") {
                 let actualsize = $(kamediv).data("size");
                 actualsize += 2;
@@ -80,7 +83,7 @@ map = {
                 $(kamediv).css("margin-top", (-18 - (actualsize/2)) + "px");
                 $(kamediv).css("margin-left", (20 - (actualsize/2)) + "px");
 
-                if (actualsize < 26) {
+                if (actualsize < 32) {
                     console.log("set new timeout");
                     setTimeout( () => { map.kamehame.grown(data) } , 1000 );
                 }
@@ -92,28 +95,47 @@ map = {
             //$("#map #char_"+data.sid + " .kamehameha").css('margin-left', (26 + 10 + 40) + "px");
         },
         going(data) {
-
-            const kamediv = $("#map #char_"+data.sid +" .kamehameha");
+            const kamediv = $("#map #kamehameha_"+data.sid);
             // width, height depende...
             const actualsize = $(kamediv).data("size");
-            const width = actualsize + 40 * (data.kamehame.x2 - data.kamehame.x1);
-            const marginleft = (20 - (actualsize/2)) + (40 * (data.kamehame.x1 - data.kamehame.cx));
+            let width = actualsize + 40 * (data.kamehame.x2 - data.kamehame.x1);
+            const marginleft = (20 - (actualsize/2)) + (40 * (data.kamehame.x1 - 1));
 
-            console.log(data, width, marginleft);
+            if (data.kamehame.hasCollision) {
+                width += 15;
+            }
 
             $(kamediv).css('width', (width) + "px");
             $(kamediv).css('margin-left', (marginleft) + "px");
         },
         shoot(data) {
-            const kamediv = $("#map #char_"+data.sid +" .kamehameha");
-            $(kamediv).data("shoot", 1);
-            $(kamediv).removeClass("kamepiscando");
+            let kamediv = $("#map #kamehameha_"+data.sid);
+            console.warn("teria que pegar do data, e não do css");
             const actualsize = $(kamediv).data("size");
+
+            $(kamediv).remove();
+
+            $("#map").append("<div id='kamehameha_"+data.sid+"' data-size='"+actualsize+"' data-shoot='1' class='kamehameha'>&nbsp;</div>");
+            kamediv = $("#map #kamehameha_"+data.sid);
+
+            const marginleft = (20 - (actualsize/2)) + (40 * (data.kamehame.x1 - 1));
+            const margintop  = (-18 - (actualsize/2)) + (40 * (data.kamehame.y1));
+
+            $(kamediv).css("border-radius", actualsize + "px");
+            $(kamediv).css('margin-top', (margintop) + "px");
+            $(kamediv).css('margin-left', (marginleft) + "px");
+
+            $(kamediv).css("height", actualsize + "px");
             $(kamediv).css('width', (actualsize + 10) + "px");
         },
+        finish(data) {
+            const kamediv = $("#map #kamehameha_"+data.sid);
+            $(kamediv).remove();
+        },
         end(data) {
+            const kamediv = $("#map #kamehameha_"+data.sid);
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_blue_128x128.gif");
-            $("#map #char_"+data.sid + " .kamehameha").remove();
+            $(kamediv).remove();
         }
     }
 }

@@ -64,6 +64,10 @@ socket.on('itemClosed', data => {
     map.item.closed(data.id);
 });
 
+socket.on('itemVanished', data => {
+    map.item.vanished(data.id);
+});
+
 socket.on('startKamehame', data => {
     console.log('startKamehame', data);
     map.kamehame.start(data);
@@ -84,7 +88,13 @@ socket.on('goingKamehameha', data => {
     map.kamehame.going(data);
 });
 
-socket.on('stoptKamehame', data => {
-    console.log('stoptKamehame', data);
-    map.kamehame.stop(data);
+// depreacted?
+// socket.on('stoptKamehame', data => {
+//     console.log('stoptKamehame', data);
+//     map.kamehame.stop(data);
+// });
+
+socket.on('finishedKamehame', data => {
+    console.log('finishedKamehame', data);
+    map.kamehame.finish(data);
 });
