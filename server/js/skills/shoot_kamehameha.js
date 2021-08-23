@@ -29,7 +29,6 @@ shootKamehame = (socket) => {
 }
 
 nextShootKamehameTimer = (socket, x, y, direction) => {
-
     const mapId = mapIdsBySocketId[socket.id];
     const map = maps[mapId];
     const kamehame = map['kamehames'][socket.id];
@@ -52,11 +51,12 @@ nextShootKamehameTimer = (socket, x, y, direction) => {
     }
 
     if (collision === false) {
-    
         if (direction == "right") {
             kamehame.x2++;
         }
+    }
 
+    if (kamehame.x1 <= kamehame.x2) {
         console.log(kamehame);
     
         socket.emit('goingKamehameha', skill);
