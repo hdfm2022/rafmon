@@ -1,3 +1,8 @@
+admin comands
+[ ] goto map,x,y ou goto x,y
+[ ] showitem (portal ou bau futuramente)
+[ ] qdo usar portal, direcionar char pro lado que tava olhando ao entrar no portal
+
 geral
 [ ] level
 [ ] xp
@@ -5,7 +10,7 @@ geral
 [ ] life
 
 musica e sons
-[ ] musica por mapa
+[x] musica por mapa
 [ ] musica quando algum golpe
 [ ] barulho dos golpes
 
