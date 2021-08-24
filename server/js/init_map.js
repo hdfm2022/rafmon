@@ -61,53 +61,57 @@ function init_map(mapId) {
                 ...baseMap
                 , song: "goof_halmet.mp3"
                 , items: [
-                    { type: 'stone', x: 17, y: 7, status: "" },
-                    { type: 'stone', x: 14, y: 9, status: "" },
-                    { type: 'stone', x: 17, y: 10, status: "" },
-                    { type: 'stone', x: 14, y: 11, status: "" },
-                    { type: 'stone', x: 14, y: 12, status: "" },
+                    { type: 'stone', x: 20, y: 7, status: "" },
+                    { type: 'stone', x: 17, y: 9, status: "" },
+                    { type: 'stone', x: 20, y: 10, status: "" },
+                    { type: 'stone', x: 17, y: 11, status: "" },
+                    { type: 'stone', x: 17, y: 12, status: "" },
 
                     
-                    { type: 'stone', x: 7, y: 7, status: "" },
-                    { type: 'stone', x: 4, y: 9, status: "" },
-                    { type: 'stone', x: 7, y: 10, status: "" },
-                    { type: 'stone', x: 4, y: 11, status: "" },
-                    { type: 'stone', x: 4, y: 12, status: "" },
+                    { type: 'stone', x: 9, y: 7, status: "" },
+                    { type: 'stone', x: 6, y: 9, status: "" },
+                    { type: 'stone', x: 9, y: 10, status: "" },
+                    { type: 'stone', x: 6, y: 11, status: "" },
+                    { type: 'stone', x: 6, y: 12, status: "" },
                 ]
                 , floors: [
                     { type: 'portal', x: 2, y: 2, nextMap: 1 },
                     
-                    { type: 'switch', x: 12, y: 5, status: "" },
-                    { type: 'switch', x: 19, y: 5, status: "" },
+                    { type: 'switch', x: 15, y: 5, status: "" },
+                    { type: 'switch', x: 22, y: 5, status: "" },
 
-                    { type: 'switch', x: 2, y: 5, status: "" },
-                    { type: 'switch', x: 9, y: 5, status: "" },
+                    { type: 'switch', x: 4, y: 5, status: "" },
+                    { type: 'switch', x: 11, y: 5, status: "" },
                 ], onFinishSwitchs:
                     { type: 'portal', x: 10, y: 3, nextMap: 1 }
                 , big: [
 
 
-                    { type: 'blocked', x1: 1, y1: 13, x2: 10, y2: 13 },
+                    { type: 'blocked', x1: 2, y1: 4, x2: 2, y2: 13 },
+                    { type: 'blocked', x1: 3, y1: 13, x2: 12, y2: 13 },
                     // { type: 'blocked', x1: 1, y1: 4, x2: 10, y2: 12 },
 
-                    { type: 'blocked', x1: 1, y1: 4, x2: 4, y2: 4 },
-                    { type: 'blocked', x1: 7, y1: 4, x2: 10, y2: 4 },
-                    { type: 'blocked', x1: 1, y1: 5, x2: 1, y2: 5 },
+                    { type: 'blocked', x1: 3, y1: 4, x2: 6, y2: 4 },
+                    { type: 'blocked', x1: 9, y1: 4, x2: 12, y2: 4 },
                     { type: 'blocked', x1: 3, y1: 5, x2: 3, y2: 5 },
-                    { type: 'blocked', x1: 8, y1: 5, x2: 8, y2: 5 },
+                    { type: 'blocked', x1: 5, y1: 5, x2: 5, y2: 5 },
                     { type: 'blocked', x1: 10, y1: 5, x2: 10, y2: 5 },
-                    { type: 'water'  , x1: 5, y1: 8, x2: 6, y2: 9 },
 
-                    { type: 'blocked', x1: 10, y1: 13, x2: 20, y2: 13 },
-                    { type: 'blocked', x1: 10, y1: 4, x2: 10, y2: 12 },
+                    { type: 'blocked', x1: 12, y1: 5, x2: 12, y2: 5 },
+                    { type: 'water'  , x1: 7, y1: 8, x2: 8, y2: 9 },
 
-                    { type: 'blocked', x1: 11, y1: 4, x2: 14, y2: 4 },
-                    { type: 'blocked', x1: 17, y1: 4, x2: 20, y2: 4 },
-                    { type: 'blocked', x1: 11, y1: 5, x2: 11, y2: 5 },
-                    { type: 'blocked', x1: 13, y1: 5, x2: 13, y2: 5 },
-                    { type: 'blocked', x1: 18, y1: 5, x2: 18, y2: 5 },
-                    { type: 'blocked', x1: 20, y1: 5, x2: 20, y2: 5 },
-                    { type: 'water'  , x1: 15, y1: 8, x2: 16, y2: 9 },
+                    { type: 'blocked', x1: 14, y1: 13, x2: 23, y2: 13 },
+                    { type: 'blocked', x1: 13, y1: 4, x2: 13, y2: 13 },
+
+                    { type: 'blocked', x1: 14, y1: 4, x2: 17, y2: 4 },
+                    { type: 'blocked', x1: 20, y1: 4, x2: 23, y2: 4 },
+                    { type: 'blocked', x1: 14, y1: 5, x2: 14, y2: 5 },
+                    { type: 'blocked', x1: 16, y1: 5, x2: 16, y2: 5 },
+                    { type: 'blocked', x1: 21, y1: 5, x2: 21, y2: 5 },
+                    { type: 'blocked', x1: 23, y1: 5, x2: 23, y2: 5 },
+                    { type: 'water'  , x1: 18, y1: 8, x2: 19, y2: 9 },
+
+                    { type: 'blocked', x1: 24, y1: 4, x2: 24, y2: 13 },
                 ]
             };
         default:
