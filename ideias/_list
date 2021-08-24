@@ -1,3 +1,9 @@
+geral
+[ ] level
+[ ] xp
+[ ] ki
+[ ] life
+
 musica e sons
 [ ] musica por mapa
 [ ] musica quando algum golpe
@@ -8,3 +14,9 @@ desempenho
 
 bugs
 [ ] impedir 2 kamehameha ao mesmo tempo do mesmo socket.id
+
+minigames
+[ ] algo colab/competitivo (conta ponto de todos, mas tem ranking) com pontos acontecendo dna tela
+
+skills
+[ ] genki
