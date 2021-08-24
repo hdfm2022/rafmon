@@ -51,13 +51,11 @@ function tryToMoveItem(mapId, itemId, movimentTried, socket, map) {
         }, 200);
     } else {
         // check if switch is closed
-        console.log("check if switch is closed");
 
         let testAllStones = false;
 
         map.floors.forEach(floor => {
             if (floor.type == "switch") {
-                console.log("checking stone...", item.x, item.y, item.status, " versus floor ", floor.x, floor.y);
                 if (item.x == floor.x && item.y == floor.y) {
                     testAllStones = true;
                     console.log("closing...");

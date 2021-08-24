@@ -1,9 +1,9 @@
-collisionDetection = (mapInfo, newX, newY) => {
-    if (newX > 20) {
+collisionDetection = (mapInfo, newX, newY, special = "") => {
+    if (newX > 20 || newX < 1) {
         return { type: 'map_collision' };
     }
-    
-    if (newY > 15) {
+
+    if (newY > 15 || newY < 1) {
         return { type: 'map_collision' };
     }
 
@@ -19,9 +19,16 @@ collisionDetection = (mapInfo, newX, newY) => {
         }
     };
 
+    for (const [key, item] of Object.entries(mapInfo.big)) {
+        if ( special !== "fly" || (item.type !== "water" && item.type !== "red_water") ) {
+            if (item.y1 <= newY && item.y2 >= newY && item.x1 <= newX && item.x2 >= newX) {
+                return { type: 'big_collision', id: key };
+            }
+        }
+    };
+
     for (const [key, floor] of Object.entries(mapInfo.floors)) {
         if (floor.type == "portal" && floor.y == newY && floor.x == newX) {
-            console.log("portal-collision");
             return { type: 'portal_collision', floor: key };
         }
     };

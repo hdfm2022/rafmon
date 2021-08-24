@@ -4,10 +4,16 @@ const tryToMoveItem = require('../move_in_map/try_to_move_item');
 shootKamehame = (socket) => {
     const mapId = mapIdsBySocketId[socket.id];
     const map = maps[mapId];
-    const char = map['chars'][socket.id]
+    const char = map['chars'][socket.id];
 
     let x = (char.x);
     let y = (char.y);
+
+    if (map['kamehames'][socket.id] && map['kamehames'][socket.id].active) {
+        console.log("nao pode atirar novo kame");
+        return false;
+    }
+
 
     map['kamehames'][socket.id] = { 
           cx: x
@@ -20,13 +26,15 @@ shootKamehame = (socket) => {
         , y2: y 
         , stopou: false
         , hasCollision: false
-        , direction: "right"
+        , active: true
+        , direction: char.actualPosition || "ArrowRight"
 
         , timer_start: char.kame_start
         , timer_shoot: Date.now()
         , size: Math.floor((((Date.now() - char.kame_start) / 1000) * 2)) + 12
     };
 
+    char.kame_start = null;
     const skill = {
         'sid': socket.id,
         'kamehame': map['kamehames'][socket.id]
@@ -35,17 +43,18 @@ shootKamehame = (socket) => {
     socket.to('map_' + mapId).emit('shootKamehame', skill);
 
     setTimeout(() => {
-        nextShootKamehameTimer(socket, "right");
+        nextShootKamehameTimer(socket);
     }, 200);
 }
 
-nextShootKamehameTimer = (socket, direction) => {
+nextShootKamehameTimer = (socket) => {
     const mapId = mapIdsBySocketId[socket.id];
     const map = maps[mapId];
     if (!map) {
         console.log("nao encontrou mapa");
         return;
     }
+    const char = map['chars'][socket.id];
     const kamehame = map['kamehames'][socket.id];
     if (!kamehame) {
         console.log("nao encontrou kamehame");
@@ -59,24 +68,35 @@ nextShootKamehameTimer = (socket, direction) => {
 
     // se ja parou, diminui o tamanho pelo inicio... 
     if (kamehame.stopou) {
-        kamehame.x1++; // isso se for para direita
+        switch(kamehame.direction) {
+            case "ArrowRight":  kamehame.x1++; break;
+            case "ArrowLeft":   kamehame.x2--; break;
+            case "ArrowUp":     kamehame.y2--; break;
+            case "ArrowDown":   kamehame.y1++; break;
+        }
     }
 
     // se ainda não teve colisão, tenta crescer ainda o golpe...
     if (kamehame.hasCollision === false) {
-        let x = kamehame.x2;
-        let y = kamehame.y2;
+        let x = 0;
+        let y = 0;
+        if (kamehame.direction == "ArrowRight" || kamehame.direction == "ArrowDown") {
+            x = kamehame.x2;
+            y = kamehame.y2;
+        } else {
+            x = kamehame.x1;
+            y = kamehame.y1;
+        }
 
-        switch(direction) {
-            case "right":  x++; break;
-            case "left":   x--; break;
-            case "top":    y--; break;
-            case "bottom": y++; break;
+        switch(kamehame.direction) {
+            case "ArrowRight":  x++; break;
+            case "ArrowLeft":   x--; break;
+            case "ArrowUp":     y--; break;
+            case "ArrowDown":   y++; break;
         }
         
-        let collisionResult = collisionDetection(map, x, y);
+        let collisionResult = collisionDetection(map, x, y, "fly");
 
-        // mesmo tendo colisão, pode ser que depois ele tira a colisão, empurrando a pedra junto com o golpe
         if (collisionResult !== false) {
             kamehame.hasCollision = true;
 
@@ -103,7 +123,7 @@ nextShootKamehameTimer = (socket, direction) => {
                             socket.to('map_' + mapId).emit('itemBroked', retorno);
                         } else {
                             if (map.items[collisionResult.item].status == "") {
-                                const mexeuOItem = tryToMoveItem(mapId, collisionResult.item, "ArrowRight", socket, map);
+                                const mexeuOItem = tryToMoveItem(mapId, collisionResult.item, kamehame.direction, socket, map);
                                 if (mexeuOItem) {
                                     kamehame.hasCollision = false;
                                     collisionResult = false;
@@ -117,25 +137,33 @@ nextShootKamehameTimer = (socket, direction) => {
         }
 
         if (collisionResult === false) {
-            if (direction == "right") {
-                kamehame.x2++;
+            switch(kamehame.direction) {
+                case "ArrowRight":  kamehame.x2++; break;
+                case "ArrowLeft":   kamehame.x1--; break;
+                case "ArrowUp":     kamehame.y1--; break;
+                case "ArrowDown":   kamehame.y2++; break;
             }
         }
+        console.log("Log", collisionResult, "x", kamehame.x1, kamehame.x2, "y", kamehame.y1, kamehame.y2)
     }
 
 
     // se não chegou no final o golpe, ainda aumenta ele...
     if (kamehame.x1 <= kamehame.x2 && kamehame.y1 <= kamehame.y2) {
-        console.log(kamehame);
+        // console.log(kamehame);
     
         socket.emit('goingKamehameha', skill);
         socket.to('map_' + mapId).emit('goingKamehameha', skill);
     
         setTimeout(() => {
-            nextShootKamehameTimer(socket, direction)
+            nextShootKamehameTimer(socket)
         }, 200);
     } else {
-        console.log("end kamehameha");
+
+        map['kamehames'][socket.id].active = false;
+
+        console.log("finishedKamehame");
+        char.kame_start = null;
 
         const skill = {
             'sid': socket.id

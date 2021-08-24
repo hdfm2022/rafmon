@@ -22,24 +22,27 @@ function handleKeydown(event) {
 
         if (keyPressed === "ArrowRight" || keyPressed === "ArrowLeft" || keyPressed === "ArrowUp" || keyPressed === "ArrowDown") {
             // console.log('movement', keyPressed);
-            if (myOwnChar.kamehameha !== 2) {
-                if (event.ctrlKey) {
-                    console.log("so virar de lado");
-                } else {
-                    const messageObject = {
-                        key: keyPressed
-                    }
-                    socket.emit('move', messageObject);
+            if (event.ctrlKey) {
+                console.log("so virar de lado");
+
+                
+                const messageObject = {
+                    key: keyPressed
                 }
+                socket.emit('dance', messageObject);
+
             } else {
-                console.warn("nao pode mexer");
+                const messageObject = {
+                    key: keyPressed
+                }
+                socket.emit('move', messageObject);
             }
         } else if (keyPressed === "1") {
-            if (myOwnChar.kamehameha === 0) {
+            // if (myOwnChar.kamehameha === 0) {
                 myOwnChar.kamehameha = 1;
                 console.log("start kamehameha");
                 socket.emit('startKamehame', {});
-            }
+            // }
         } else if (keyPressed === "Escape") {
             if (myOwnChar.kamehameha === 1) {
                 console.log("end kamehameha");

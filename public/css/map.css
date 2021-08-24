@@ -17,7 +17,7 @@ body {
     background: rgba(0, 255, 125, 1);
     background-clip: content-box !important;
     border: solid 1px gray;
-    margin-top: 3px;
+    margin-top: 1px;
     margin-left: -1px;
     width: 40px;
 }
@@ -31,13 +31,6 @@ body {
     font-family: Verdana;
     text-shadow: 0 0 2px #0ac519;
     font-size: 12px;
-}
-
-.char {
-    transition: margin 700ms;
-    position: fixed;
-    width: 40px;
-    height: 40px;
 }
 
 .floor {
@@ -54,7 +47,7 @@ body {
 }
 
 .kamehameha {
-    transition: 210ms;
+    transition: 200ms;
     background: yellow;
     position: fixed;
     margin-top: -24px;
@@ -73,6 +66,31 @@ body {
     animation-name: fadeIn;
     animation-duration: 1s;
     animation-iteration-count: infinite;
+}
+
+.water {
+    border: solid 1px gray;
+}
+
+.waterLefting {
+    -webkit-animation-name: waterLefting;
+    -webkit-animation-duration: 5s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    animation-name: waterLefting;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@-webkit-keyframes waterLefting { 
+    0% { margin-left: -0px; }
+    100% { margin-left: -96px; }
+}
+
+@keyframes waterLefting { 
+    0% { margin-left: -0px; }
+    100% { margin-left: -96px; }
 }
 
 @-webkit-keyframes fadeIn { 
