@@ -5,6 +5,8 @@ const tryToMoveItem = require("./try_to_move_item");
 move = (socket, data) => {
     console.log("entered move function with socket");
 
+    const velocidadeMaximaMS = 180;
+
     let newCharPosition = false;
     let collisionResult = false;
     let mapId = mapIdsBySocketId[socket.id];
@@ -17,7 +19,7 @@ move = (socket, data) => {
         return false;
     }
 
-    if (Date.now() - char.lastMoviment < 380) {
+    if (Date.now() - char.lastMoviment < velocidadeMaximaMS) {
         console.log("nao pode mexer tao rapido");
 
         if (char.nextMove) {
@@ -25,7 +27,7 @@ move = (socket, data) => {
             clearTimeout(char.nextMove);
         } 
 
-        char.nextMove = setTimeout( () => { move(socket, data); }, 380 - Date.now() - char.lastMoviment )
+        char.nextMove = setTimeout( () => { move(socket, data); }, velocidadeMaximaMS - Date.now() - char.lastMoviment )
 
         return false;
     }
