@@ -3,13 +3,23 @@ startKamehame = (socket) => {
     const map = maps[mapId];
     const char = map['chars'][socket.id]
 
-    char.kame_start = Date.now()
-
-    const skill = {
-        'sid': socket.id
+    if (map['kamehames'][socket.id] && map['kamehames'][socket.id].active) {
+        console.log("nao pode starter novo kame");
+        return false;
     }
-    socket.emit('startKamehame', skill);
-    socket.to('map_' + mapId).emit('startKamehame', skill);
+
+    // if (map['kamehames'][socket.id]) {
+    //     console.log("nao pode começar outro kamehameha");
+    //     return false;
+    // } else {
+        char.kame_start = Date.now()
+
+        const skill = {
+            'sid': socket.id
+        }
+        socket.emit('startKamehame', skill);
+        socket.to('map_' + mapId).emit('startKamehame', skill);
+    // }
 }
 
 module.exports = startKamehame;

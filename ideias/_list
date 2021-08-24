@@ -1,0 +1,10 @@
+musica e sons
+[ ] musica por mapa
+[ ] musica quando algum golpe
+[ ] barulho dos golpes
+
+desempenho
+[ ] impedir frontend de mandar varias requisições
+
+bugs
+[ ] impedir 2 kamehameha ao mesmo tempo do mesmo socket.id

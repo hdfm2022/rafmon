@@ -12,6 +12,11 @@ move = (socket, data) => {
     const map = maps[mapId];
     const char = map.chars[socket.id];
 
+    if (map['kamehames'][socket.id] && map['kamehames'][socket.id].active && map['kamehames'][socket.id].stopou === false) {
+        console.log("nao pode mover enquanto kame...");
+        return false;
+    }
+
     if (Date.now() - char.lastMoviment < 380) {
         console.log("nao pode mexer tao rapido");
 

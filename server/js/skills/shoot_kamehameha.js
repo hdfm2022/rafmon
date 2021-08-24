@@ -4,10 +4,15 @@ const tryToMoveItem = require('../move_in_map/try_to_move_item');
 shootKamehame = (socket) => {
     const mapId = mapIdsBySocketId[socket.id];
     const map = maps[mapId];
-    const char = map['chars'][socket.id]
+    const char = map['chars'][socket.id];
 
     let x = (char.x);
     let y = (char.y);
+
+    if (map['kamehames'][socket.id] && map['kamehames'][socket.id].active) {
+        console.log("nao pode atirar novo kame");
+        return false;
+    }
 
     map['kamehames'][socket.id] = { 
           cx: x
@@ -20,6 +25,7 @@ shootKamehame = (socket) => {
         , y2: y 
         , stopou: false
         , hasCollision: false
+        , active: true
         , direction: "right"
 
         , timer_start: char.kame_start
@@ -46,6 +52,7 @@ nextShootKamehameTimer = (socket, direction) => {
         console.log("nao encontrou mapa");
         return;
     }
+    const char = map['chars'][socket.id];
     const kamehame = map['kamehames'][socket.id];
     if (!kamehame) {
         console.log("nao encontrou kamehame");
@@ -124,7 +131,7 @@ nextShootKamehameTimer = (socket, direction) => {
 
     // se não chegou no final o golpe, ainda aumenta ele...
     if (kamehame.x1 <= kamehame.x2 && kamehame.y1 <= kamehame.y2) {
-        console.log(kamehame);
+        // console.log(kamehame);
     
         socket.emit('goingKamehameha', skill);
         socket.to('map_' + mapId).emit('goingKamehameha', skill);
@@ -133,7 +140,11 @@ nextShootKamehameTimer = (socket, direction) => {
             nextShootKamehameTimer(socket, direction)
         }, 200);
     } else {
-        console.log("end kamehameha");
+
+        map['kamehames'][socket.id].active = false;
+
+        console.log("finishedKamehame");
+        char.kame_start = null;
 
         const skill = {
             'sid': socket.id

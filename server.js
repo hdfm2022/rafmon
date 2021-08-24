@@ -34,14 +34,12 @@ io.on('connection', socket => {
     console.log(`> Socket connected: ${socket.id}`)
 
     socket.on('subscribeLogger', data=> {
-        console.log("subscribeLogger");
         socket.join('logger');
     });
 
     socket.on('move', data => {
         move(socket, data);
     });
-
 
     socket.on('disconnect', () => {
         console.log(`> Socket disconnected: ${socket.id}`)
@@ -65,20 +63,15 @@ io.on('connection', socket => {
     })
 
     socket.on('endKamehame', data => {
-        console.log('endKamehame');
         endKamehame(socket)
-        
     });
     socket.on('startKamehame', data => {
-        console.log('startKamehame');
         startKamehame(socket)
     });
     socket.on('shootKamehame', data => {
-        console.log('shootKamehame');
         shootKamehame(socket)
     });
     socket.on('stopKamehame', data => {
-        console.log('stopKamehame');
         stopKamehame(socket)
     });
 
