@@ -24,6 +24,13 @@ function handleKeydown(event) {
             // console.log('movement', keyPressed);
             if (event.ctrlKey) {
                 console.log("so virar de lado");
+
+                
+                const messageObject = {
+                    key: keyPressed
+                }
+                socket.emit('dance', messageObject);
+
             } else {
                 const messageObject = {
                     key: keyPressed

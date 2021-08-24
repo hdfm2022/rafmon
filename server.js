@@ -11,6 +11,8 @@ const charDisappearInMap = require('./server/js/in_out_map/char_disappear_in_map
 const tryToMoveItem = require('./server/js/move_in_map/try_to_move_item');
 const move = require('./server/js/move_in_map/move');
 
+const dance = require('./server/js/move_in_map/dance');
+
 // kamehameha
 const startKamehame = require('./server/js/skills/start_kamehameha');
 const endKamehame   = require('./server/js/skills/end_kamehameha');
@@ -39,6 +41,12 @@ io.on('connection', socket => {
 
     socket.on('move', data => {
         move(socket, data);
+    });
+
+    socket.on('dance', data => {
+        dance(socket, data);
+        console.log("dance", data);
+        // move(socket, data);
     });
 
     socket.on('disconnect', () => {
