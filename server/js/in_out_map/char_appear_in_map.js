@@ -20,6 +20,7 @@ function charAppearInMap(mapId, socket, charPublicInfo) {
         'mapId': mapId
     }
 
+    console.log(infoConectado);
     socket.emit('youAreConnected', JSON.stringify(infoConectado));
 
     socket.join('game');

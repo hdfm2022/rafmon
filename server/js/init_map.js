@@ -1,5 +1,5 @@
 function init_map(mapId) {
-    const baseMap = { kamehames: [], on: 0, chars: {}, big: [] };
+    const baseMap = { song: 'dragon_ball_1.mp3', kamehames: [], on: 0, chars: {}, big: [] };
     switch (mapId) {
         case 1:
             return {
@@ -59,6 +59,7 @@ function init_map(mapId) {
         case 5:
             return {
                 ...baseMap
+                , song: "goof_halmet.mp3"
                 , items: [
                     { type: 'stone', x: 17, y: 7, status: "" },
                     { type: 'stone', x: 14, y: 9, status: "" },

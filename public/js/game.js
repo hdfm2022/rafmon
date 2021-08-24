@@ -33,6 +33,9 @@ socket.on('youAreConnected', message => {
     for (const [itemId, item] of Object.entries(message.mapinfo.big)) {
         map.big.append(itemId, item);
     }
+
+    $("#song").html("");
+    $("#song").append("<audio controls autoplay > <source src=\"mp3/"+message.mapinfo.song+"\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio>");
 });
 
 socket.on('newFloorAppeared', data => {
