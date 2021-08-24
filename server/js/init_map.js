@@ -9,8 +9,8 @@ function init_map(mapId) {
                 ]
                 , floors: [
                     { type: 'portal', x: 4, y: 1, nextMap: 2 },
-                    { type: 'portal', x: 2, y: 7, nextMap: 5 }, // hoje nao tem como chegar aqui...
-                    { type: 'portal', x: 10, y: 3, nextMap: 4 }, // hoje nao tem como chegar aqui...
+                    { type: 'portal', x: 2, y: 7, nextMap: 5 },
+                    { type: 'portal', x: 10, y: 3, nextMap: 5 }, // hoje nao tem como chegar aqui...
                 ]
                 , big: [
                     { type: 'blocked', x1: 6, y1: 1, x2: 7, y2: 1 },
@@ -62,16 +62,18 @@ function init_map(mapId) {
                 , items: [
                     { type: 'stone', x: 17, y: 7, status: "" },
 
-                    { type: 'stone', x: 14, y: 9 , status: "" },
+                    { type: 'stone', x: 14, y: 9, status: "" },
                     { type: 'stone', x: 17, y: 10, status: "" },
                     { type: 'stone', x: 14, y: 11, status: "" },
                     { type: 'stone', x: 14, y: 12, status: "" },
                 ]
                 , floors: [
                     { type: 'portal', x: 2, y: 7, nextMap: 1 },
+                    
                     { type: 'switch', x: 12, y: 5, status: "" },
                     { type: 'switch', x: 19, y: 5, status: "" },
-                ]
+                ], onFinishSwitchs:
+                    { type: 'portal', x: 10, y: 3, nextMap: 1 }
                 , big: [
                     { type: 'blocked', x1: 10, y1: 13, x2: 20, y2: 13 },
                     { type: 'blocked', x1: 10, y1: 4, x2: 10, y2: 12 },
