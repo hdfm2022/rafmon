@@ -71,7 +71,6 @@ move = (socket, data) => {
     if (collisionResult instanceof Object) {
         if (collisionResult.type == "portal_collision") {
             const portal = map.floors[collisionResult.floor];
-            const charPublicInfo = map.chars[socket.id];
 
             charDisappearInMap(mapId, socket);
 
@@ -81,7 +80,7 @@ move = (socket, data) => {
             if (data.key == "ArrowDown")  char.y += 2;
             if (data.key == "ArrowUp")    char.y -= 2;
             
-            charAppearInMap(mapId, socket, charPublicInfo);
+            charAppearInMap(mapId, socket, char);
         }
         if (collisionResult.type == "item_collision") {
             if (map.items[collisionResult.item].type == "stone") {
@@ -93,6 +92,9 @@ move = (socket, data) => {
     }
 
     if (newCharPosition) {
+
+        char.actualPosition = data.key;
+
         const retorno = { sid: socket.id, x: char.x, y: char.y, key: data.key };
         socket.emit('charMoved', retorno);
         socket.to('map_' + mapId).emit('charMoved', retorno);

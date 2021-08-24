@@ -123,14 +123,19 @@ map = {
             // width, height depende...
             const actualsize = $(kamediv).data("size");
             let width = actualsize + 40 * (data.kamehame.x2 - data.kamehame.x1);
+            let height = actualsize + 40 * (data.kamehame.y2 - data.kamehame.y1);
             const marginleft = (20 - (actualsize / 2)) + (40 * (data.kamehame.x1 - 1));
+            const margintop = (-18 - (actualsize / 2)) + (40 * (data.kamehame.y1));
+            $(kamediv).css("margin-top", (-18 - (actualsize / 2)) + "px");
 
             if (data.kamehame.hasCollision) {
                 width += 15;
             }
 
             $(kamediv).css('width', (width) + "px");
+            $(kamediv).css('height', (height) + "px");
             $(kamediv).css('margin-left', (marginleft) + "px");
+            $(kamediv).css('margin-top', (margintop) + "px");
         },
         shoot(data) {
             let kamediv = $("#map #kamehameha_" + data.sid);
