@@ -20,7 +20,8 @@ function charAppearInMap(mapId, socket, charPublicInfo) {
         'mapId': mapId
     }
 
-    socket.emit('youAreConnected', infoConectado);
+    socket.emit('youAreConnected', JSON.stringify(infoConectado));
+
     socket.join('game');
     socket.to('map_' + mapId).emit('newCharIsHere', charPublicInfo);
     socket.join('map_' + mapId);

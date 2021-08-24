@@ -10,6 +10,7 @@ socket.on('disconnect', () => {
 
 socket.on('youAreConnected', message => {
     console.log("changed map");
+    message = JSON.parse(message);
     console.log(message);
     conectado = true;
     mapId = message.mapId;
