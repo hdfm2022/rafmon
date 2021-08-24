@@ -9,6 +9,7 @@ const collisionDetection = require('./server/js/move_in_map/collision_detection'
 const charAppearInMap = require('./server/js/in_out_map/char_appear_in_map');
 const charDisappearInMap = require('./server/js/in_out_map/char_disappear_in_map');
 const tryToMoveItem = require('./server/js/move_in_map/try_to_move_item');
+const move = require('./server/js/move_in_map/move');
 
 // kamehameha
 const startKamehame = require('./server/js/skills/start_kamehameha');
@@ -38,78 +39,7 @@ io.on('connection', socket => {
     });
 
     socket.on('move', data => {
-        let newCharPosition = false;
-        let collisionResult = false;
-        let mapId = mapIdsBySocketId[socket.id];
-
-        const map = maps[mapId];
-        const char = map.chars[socket.id];
-
-        if (!char) {
-            console.log("problema");
-            console.log("map", map);
-            return true;
-        }
-
-        if (data.key == "ArrowRight") {
-            collisionResult = collisionDetection(map, char.x + 1, char.y);
-            if (char.x < 20 && collisionResult === false) {
-                char.x++;
-                newCharPosition = true;
-            }
-        }
-        if (data.key == "ArrowLeft") {
-            collisionResult = collisionDetection(map, char.x - 1, char.y);
-            if (char.x > 1 && collisionResult === false) {
-                char.x--;
-                newCharPosition = true;
-            }
-        }
-        if (data.key == "ArrowDown") {
-            collisionResult = collisionDetection(map, char.x, char.y + 1);
-            if (char.y < 15 && collisionResult === false) {
-                char.y++;
-                newCharPosition = true;
-            }
-        }
-        if (data.key == "ArrowUp") {
-            collisionResult = collisionDetection(map, char.x, char.y - 1);
-            if (char.y > 1 && collisionResult === false) {
-                char.y--;
-                newCharPosition = true;
-            }
-        }
-
-        if (collisionResult instanceof Object) {
-            if (collisionResult.type == "portal_collision") {
-                const portal = map.floors[collisionResult.floor];
-                const charPublicInfo = map.chars[socket.id];
-
-                charDisappearInMap(mapId, socket);
-
-                mapId = portal.nextMap;
-                if (data.key == "ArrowRight") char.x += 2;
-                if (data.key == "ArrowLeft")  char.x -= 2;
-                if (data.key == "ArrowDown")  char.y += 2;
-                if (data.key == "ArrowUp")    char.y -= 2;
-                
-                charAppearInMap(mapId, socket, charPublicInfo);
-            }
-            if (collisionResult.type == "item_collision") {
-                if (map.items[collisionResult.item].type == "stone") {
-                    if (map.items[collisionResult.item].status == "") {
-                        tryToMoveItem(mapId, collisionResult.item, data.key, socket, map);
-                    }
-                }
-            }
-        }
-
-        if (newCharPosition) {
-            const retorno = { sid: socket.id, x: char.x, y: char.y };
-            socket.emit('charMoved', retorno);
-            socket.to('map_' + mapId).emit('charMoved', retorno);
-            socket.to('logger').emit('logg', {'type' :"charMoved", 'mapId' : mapId, "data": retorno } );
-        }
+        move(socket, data);
     });
 
 

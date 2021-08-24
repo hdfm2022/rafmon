@@ -34,7 +34,7 @@ body {
 }
 
 .char {
-    transition: margin 700ms;
+    transition: margin 400ms;
     position: fixed;
     width: 40px;
     height: 40px;
