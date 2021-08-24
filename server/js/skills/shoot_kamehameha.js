@@ -74,13 +74,9 @@ nextShootKamehameTimer = (socket, direction) => {
             case "bottom": y++; break;
         }
         
-        const collisionResult = collisionDetection(map, x, y);
+        let collisionResult = collisionDetection(map, x, y, "fly");
 
-        if (collisionResult === false) {
-            if (direction == "right") {
-                kamehame.x2++;
-            }
-        } else {
+        if (collisionResult !== false) {
             kamehame.hasCollision = true;
 
             if (collisionResult instanceof Object) {
@@ -109,6 +105,7 @@ nextShootKamehameTimer = (socket, direction) => {
                                 const mexeuOItem = tryToMoveItem(mapId, collisionResult.item, "ArrowRight", socket, map);
                                 if (mexeuOItem) {
                                     kamehame.hasCollision = false;
+                                    collisionResult = false;
                                 }
                             }
                         }
@@ -116,14 +113,11 @@ nextShootKamehameTimer = (socket, direction) => {
                     }
                 }
             }
+        }
 
-            if (kamehame.hasCollision == true) {
-                switch(direction) {
-                    case "right":  x--; break;
-                    case "left":   x++; break;
-                    case "top":    y++; break;
-                    case "bottom": y--; break;
-                }
+        if (collisionResult === false) {
+            if (direction == "right") {
+                kamehame.x2++;
             }
         }
     }

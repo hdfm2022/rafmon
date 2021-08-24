@@ -9,7 +9,8 @@ socket.on('disconnect', () => {
 });
 
 socket.on('youAreConnected', message => {
-    console.log("youAreConnected");
+    console.log("changed map");
+    console.log(message);
     conectado = true;
     mapId = message.mapId;
     myOwnChar = new Char(message.charInfo);
@@ -17,7 +18,6 @@ socket.on('youAreConnected', message => {
     map.connect();
 
     for (const [floorId, floor] of Object.entries(message.mapinfo.floors)) {
-        console.log("append floor", floor);
         map.floor.append(floorId, floor);
     }
 
@@ -26,8 +26,11 @@ socket.on('youAreConnected', message => {
     }
 
     for (const [itemId, item] of Object.entries(message.mapinfo.items)) {
-        console.log("append item", item);
         map.item.append(itemId, item);
+    }
+
+    for (const [itemId, item] of Object.entries(message.mapinfo.big)) {
+        map.big.append(itemId, item);
     }
 });
 

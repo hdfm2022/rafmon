@@ -13,37 +13,49 @@ map = {
         append(itemId, item) {
             let image = item.type;
             if (item.status) {
-                image += "_"+item.status;
+                image += "_" + item.status;
             }
             let extension = "png";
             if (item.type == "portal") {
                 extension = "gif";
             }
-            $("#map").append("<div data-type='"+item.type+"' class='floor' id='floor_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/floors/"+image+"."+extension+"' style='width:32px; height:32px; margin-top: 3px; margin-left: 3px;'></div>");
+            $("#map").append("<div data-type='" + item.type + "' class='floor' id='floor_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/floors/" + image + "." + extension + "' style='width:32px; height:32px; margin-top: 3px; margin-left: 3px;'></div>");
         }
+    },
+    big: {
+        append(itemId, item) {
+            let image = item.type;
+            if (image == "water" || image == "red_water") {
+                $("#map").append("<div data-type='" + item.type + "' class='water item' id='item_" + itemId + "' style='overflow: hidden; margin-left: " + (((item.x1 - 1) * 40)) + "px; margin-top: " + (((item.y1 - 1) * 40)) + "px; width: " + (((item.x2 - item.x1 + 1) * 40)) + "px; height: " + (((item.y2 - item.y1 + 1) * 40)) + "px;'><div class='insidewater waterLefting' style='width: calc(100% + 96px); height: calc(100%);background-image: url(\"img/big/" + image + ".jpg\")'></div></div>");
+           
+            } else {
+                $("#map").append("<div data-type='" + item.type + "' class='item' id='item_" + itemId + "' style='margin-left: " + (((item.x1 - 1) * 40)) + "px; margin-top: " + (((item.y1 - 1) * 40)) + "px; width: " + (((item.x2 - item.x1 + 1) * 40)) + "px; height: " + (((item.y2 - item.y1 + 1) * 40)) + "px; background-image: url(\"img/big/" + image + ".jpg\")'></div>");
+
+            }
+        },
     },
     item: {
         append(itemId, item) {
             let image = item.type;
             if (item.status) {
-                image += "_"+item.status;
+                image += "_" + item.status;
             }
-            $("#map").append("<div data-type='"+item.type+"' class='item' id='item_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/items/"+image+".png' style='width:32px; height:32px; margin-top: 3px; margin-left: 3px;'></div>");
+            $("#map").append("<div data-type='" + item.type + "' class='item' id='item_" + itemId + "' style='margin-left: " + (((item.x - 1) * 40)) + "px; margin-top: " + (((item.y - 1) * 40)) + "px;" + "'><img src='img/items/" + image + ".png' style='width:32px; height:32px; margin-top: 3px; margin-left: 3px;'></div>");
         },
         move(itemId, x, y) {
             $("#item_" + itemId).css("margin-left", (((x - 1) * 40)) + "px");
             $("#item_" + itemId).css("margin-top", (((y - 1) * 40)) + "px");
         },
         broked(itemId) {
-            const type = $("#item_"+itemId).data("type");
-            $("#item_"+itemId + " img").attr("src", "img/items/"+type+"_broked.png")
+            const type = $("#item_" + itemId).data("type");
+            $("#item_" + itemId + " img").attr("src", "img/items/" + type + "_broked.png")
         },
         vanished(itemId) {
-            $("#item_"+itemId + "").css("opacity", 0);
+            $("#item_" + itemId + "").css("opacity", 0);
         },
         closed(itemId) {
-            const type = $("#item_"+itemId).data("type");
-            $("#item_"+itemId + " img").attr("src", "img/items/"+type+"_closed.png")
+            const type = $("#item_" + itemId).data("type");
+            $("#item_" + itemId + " img").attr("src", "img/items/" + type + "_closed.png")
         }
     },
     char: {
@@ -64,12 +76,12 @@ map = {
 
         start(data) {
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_red_128x128.gif");
-            $("#map #kamehameha_"+data.sid).remove(); // just in case
-            $("#map #char_"+data.sid).append("<div id='kamehameha_"+data.sid+"' data-size='12' data-shoot='0' class='kamehameha kamepiscando'>&nbsp;</div>");
-            setTimeout( () => { map.kamehame.grown(data) }, 1000 );
+            $("#map #kamehameha_" + data.sid).remove(); // just in case
+            $("#map #char_" + data.sid).append("<div id='kamehameha_" + data.sid + "' data-size='12' data-shoot='0' class='kamehameha kamepiscando'>&nbsp;</div>");
+            setTimeout(() => { map.kamehame.grown(data) }, 1000);
         },
         grown(data) {
-            const kamediv = $("#map #kamehameha_"+data.sid);
+            const kamediv = $("#map #kamehameha_" + data.sid);
             if ($(kamediv).data("size") && $(kamediv).data("shoot") == "0") {
                 let actualsize = $(kamediv).data("size");
                 actualsize += 2;
@@ -80,12 +92,12 @@ map = {
                 $(kamediv).css("height", actualsize + "px");
                 $(kamediv).css("border-radius", actualsize + "px");
 
-                $(kamediv).css("margin-top", (-18 - (actualsize/2)) + "px");
-                $(kamediv).css("margin-left", (20 - (actualsize/2)) + "px");
+                $(kamediv).css("margin-top", (-18 - (actualsize / 2)) + "px");
+                $(kamediv).css("margin-left", (20 - (actualsize / 2)) + "px");
 
                 if (actualsize < 32) {
                     console.log("set new timeout");
-                    setTimeout( () => { map.kamehame.grown(data) } , 1000 );
+                    setTimeout(() => { map.kamehame.grown(data) }, 1000);
                 }
             }
         },
@@ -95,11 +107,11 @@ map = {
             //$("#map #char_"+data.sid + " .kamehameha").css('margin-left', (26 + 10 + 40) + "px");
         },
         going(data) {
-            const kamediv = $("#map #kamehameha_"+data.sid);
+            const kamediv = $("#map #kamehameha_" + data.sid);
             // width, height depende...
             const actualsize = $(kamediv).data("size");
             let width = actualsize + 40 * (data.kamehame.x2 - data.kamehame.x1);
-            const marginleft = (20 - (actualsize/2)) + (40 * (data.kamehame.x1 - 1));
+            const marginleft = (20 - (actualsize / 2)) + (40 * (data.kamehame.x1 - 1));
 
             if (data.kamehame.hasCollision) {
                 width += 15;
@@ -109,17 +121,17 @@ map = {
             $(kamediv).css('margin-left', (marginleft) + "px");
         },
         shoot(data) {
-            let kamediv = $("#map #kamehameha_"+data.sid);
+            let kamediv = $("#map #kamehameha_" + data.sid);
             console.warn("teria que pegar do data, e não do css");
             const actualsize = $(kamediv).data("size");
 
             $(kamediv).remove();
 
-            $("#map").append("<div id='kamehameha_"+data.sid+"' data-size='"+actualsize+"' data-shoot='1' class='kamehameha'>&nbsp;</div>");
-            kamediv = $("#map #kamehameha_"+data.sid);
+            $("#map").append("<div id='kamehameha_" + data.sid + "' data-size='" + actualsize + "' data-shoot='1' class='kamehameha'>&nbsp;</div>");
+            kamediv = $("#map #kamehameha_" + data.sid);
 
-            const marginleft = (20 - (actualsize/2)) + (40 * (data.kamehame.x1 - 1));
-            const margintop  = (-18 - (actualsize/2)) + (40 * (data.kamehame.y1));
+            const marginleft = (20 - (actualsize / 2)) + (40 * (data.kamehame.x1 - 1));
+            const margintop = (-18 - (actualsize / 2)) + (40 * (data.kamehame.y1));
 
             $(kamediv).css("border-radius", actualsize + "px");
             $(kamediv).css('margin-top', (margintop) + "px");
@@ -129,11 +141,11 @@ map = {
             $(kamediv).css('width', (actualsize + 10) + "px");
         },
         finish(data) {
-            const kamediv = $("#map #kamehameha_"+data.sid);
+            const kamediv = $("#map #kamehameha_" + data.sid);
             $(kamediv).remove();
         },
         end(data) {
-            const kamediv = $("#map #kamehameha_"+data.sid);
+            const kamediv = $("#map #kamehameha_" + data.sid);
             // $("#char_"+data.sid + " .img_char").attr("src", "img/gifs/slime_blue_128x128.gif");
             $(kamediv).remove();
         }
