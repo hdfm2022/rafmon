@@ -3,7 +3,7 @@ startKamehame = (socket) => {
     const map = maps[mapId];
     const char = map['chars'][socket.id]
 
-    if (map['kamehames'][socket.id] && map['kamehames'][socket.id].active) {
+    if ((map['kamehames'][socket.id] && map['kamehames'][socket.id].active) || char.kame_start) {
         console.log("nao pode starter novo kame");
         return false;
     }

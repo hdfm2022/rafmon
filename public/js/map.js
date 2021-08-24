@@ -126,7 +126,6 @@ map = {
             let height = actualsize + 40 * (data.kamehame.y2 - data.kamehame.y1);
             const marginleft = (20 - (actualsize / 2)) + (40 * (data.kamehame.x1 - 1));
             const margintop = (-18 - (actualsize / 2)) + (40 * (data.kamehame.y1));
-            $(kamediv).css("margin-top", (-18 - (actualsize / 2)) + "px");
 
             if (data.kamehame.hasCollision) {
                 width += 15;
@@ -155,7 +154,7 @@ map = {
             $(kamediv).css('margin-left', (marginleft) + "px");
 
             $(kamediv).css("height", actualsize + "px");
-            $(kamediv).css('width', (actualsize + 10) + "px");
+            $(kamediv).css('width', actualsize + "px");
         },
         finish(data) {
             const kamediv = $("#map #kamehameha_" + data.sid);

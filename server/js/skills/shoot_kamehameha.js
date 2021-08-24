@@ -14,6 +14,7 @@ shootKamehame = (socket) => {
         return false;
     }
 
+
     map['kamehames'][socket.id] = { 
           cx: x
         , cy: y 
@@ -33,6 +34,7 @@ shootKamehame = (socket) => {
         , size: Math.floor((((Date.now() - char.kame_start) / 1000) * 2)) + 12
     };
 
+    char.kame_start = null;
     const skill = {
         'sid': socket.id,
         'kamehame': map['kamehames'][socket.id]
@@ -66,7 +68,12 @@ nextShootKamehameTimer = (socket) => {
 
     // se ja parou, diminui o tamanho pelo inicio... 
     if (kamehame.stopou) {
-        kamehame.x1++; // isso se for para direita
+        switch(kamehame.direction) {
+            case "ArrowRight":  kamehame.x1++; break;
+            case "ArrowLeft":   kamehame.x2--; break;
+            case "ArrowUp":     kamehame.y2--; break;
+            case "ArrowDown":   kamehame.y1++; break;
+        }
     }
 
     // se ainda não teve colisão, tenta crescer ainda o golpe...
