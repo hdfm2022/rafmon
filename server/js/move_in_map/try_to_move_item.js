@@ -6,7 +6,7 @@ function tryToMoveItem(mapId, itemId, movimentTried, socket, map) {
 
     if (movimentTried == "ArrowRight") {
         collisionResult = collisionDetection(map, item.x + 1, item.y);
-        if (item.x < 20 && collisionResult === false) {
+        if (item.x < 25 && collisionResult === false) {
             item.x++;
             newItemPosition = true;
         }

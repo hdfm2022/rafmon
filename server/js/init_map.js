@@ -34,15 +34,15 @@ function init_map(mapId) {
                     { type: 'switch', x: 8, y: 15, status: "" },
                     { type: 'switch', x: 1, y: 4, status: "" },
                     { type: 'switch', x: 7, y: 1, status: "" },
-                    { type: 'switch', x: 20, y: 5, status: "" },
-                    { type: 'switch', x: 20, y: 12, status: "" },
+                    { type: 'switch', x: 25, y: 5, status: "" },
+                    { type: 'switch', x: 25, y: 12, status: "" },
                 ], onFinishSwitchs:
                     { type: 'portal', x: 11, y: 15, nextMap: 3 }
                 , big: [
                     { type: 'blocked', x1: 6, y1: 3, x2: 6, y2: 3 },
                     { type: 'blocked', x1: 4, y1: 2, x2: 4, y2: 2 },
 
-                    { type: 'blocked', x1: 12, y1: 8, x2: 20, y2: 8 },
+                    // { type: 'blocked', x1: 12, y1: 8, x2: 20, y2: 8 },
                     { type: 'water', x1: 12, y1: 9, x2: 15, y2: 15 },
                 ]
             };

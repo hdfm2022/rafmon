@@ -1,5 +1,5 @@
 collisionDetection = (mapInfo, newX, newY, special = "") => {
-    if (newX > 20 || newX < 1) {
+    if (newX > 25 || newX < 1) {
         return { type: 'map_collision' };
     }
 

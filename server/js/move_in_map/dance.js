@@ -11,12 +11,11 @@ dance = (socket, data) => {
         return false;
     }
 
+    char.actualPosition = data.key;
 
-        char.actualPosition = data.key;
-
-        const retorno = { sid: socket.id, x: char.x, y: char.y, key: data.key };
-        socket.emit('charMoved', retorno);
-        socket.to('map_' + mapId).emit('charMoved', retorno);
-        socket.to('logger').emit('logg', {'type' :"charMoved", 'mapId' : mapId, "data": retorno } );
+    const retorno = { sid: socket.id, x: char.x, y: char.y, key: data.key };
+    socket.emit('charMoved', retorno);
+    socket.to('map_' + mapId).emit('charMoved', retorno);
+    socket.to('logger').emit('logg', { 'type': "charMoved", 'mapId': mapId, "data": retorno });
 }
 module.exports = dance;

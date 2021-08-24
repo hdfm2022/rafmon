@@ -41,7 +41,7 @@ move = (socket, data) => {
 
     if (data.key == "ArrowRight") {
         collisionResult = collisionDetection(map, char.x + 1, char.y);
-        if (char.x < 20 && collisionResult === false) {
+        if (char.x < 25 && collisionResult === false) {
             char.x++;
             newCharPosition = true;
         }
