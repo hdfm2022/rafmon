@@ -91,7 +91,7 @@ move = (socket, data) => {
     }
 
     if (newCharPosition) {
-        const retorno = { sid: socket.id, x: char.x, y: char.y };
+        const retorno = { sid: socket.id, x: char.x, y: char.y, key: data.key };
         socket.emit('charMoved', retorno);
         socket.to('map_' + mapId).emit('charMoved', retorno);
         socket.to('logger').emit('logg', {'type' :"charMoved", 'mapId' : mapId, "data": retorno } );

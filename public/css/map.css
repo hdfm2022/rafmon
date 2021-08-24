@@ -17,7 +17,7 @@ body {
     background: rgba(0, 255, 125, 1);
     background-clip: content-box !important;
     border: solid 1px gray;
-    margin-top: 3px;
+    margin-top: 1px;
     margin-left: -1px;
     width: 40px;
 }
@@ -31,14 +31,6 @@ body {
     font-family: Verdana;
     text-shadow: 0 0 2px #0ac519;
     font-size: 12px;
-}
-
-.char {
-    transition: margin 400ms;
-    position: fixed;
-    width: 40px;
-    height: 40px;
-    z-index: 999;
 }
 
 .floor {

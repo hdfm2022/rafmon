@@ -12,13 +12,13 @@ startKamehame = (socket) => {
     //     console.log("nao pode começar outro kamehameha");
     //     return false;
     // } else {
-        char.kame_start = Date.now()
+    char.kame_start = Date.now()
 
-        const skill = {
-            'sid': socket.id
-        }
-        socket.emit('startKamehame', skill);
-        socket.to('map_' + mapId).emit('startKamehame', skill);
+    const skill = {
+        'sid': socket.id
+    }
+    socket.emit('startKamehame', skill);
+    socket.to('map_' + mapId).emit('startKamehame', skill);
     // }
 }
 

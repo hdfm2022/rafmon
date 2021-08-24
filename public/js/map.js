@@ -62,12 +62,24 @@ map = {
         append(char) {
             const namediv = "<div class='nameup'>" + char.login + "</div>";
             const lifediv = "<div class='lifeup' id='life_up_1' style='border-right-width: 0px; background: rgb(255, 80, 20);'></div>";
-            $("#map").append("<div class='char' id='char_" + char.sid + "' style='margin-left: " + (((char.x - 1) * 40)) + "px; margin-top: " + (((char.y - 1) * 40)) + "px;" + "'>" + namediv + lifediv + "<img class='img_char' src='img/gifs/slime_blue_128x128.gif' style='width:32px; height:32px; margin-top: 4px; margin-left: 3px;'></div>");
+            // <img class='img_char' src='img/gifs/slime_blue_128x128.gif' style='width:32px; height:32px; margin-top: 4px; margin-left: 3px;'> < old
+            $("#map").append("<div class='char right' id='char_" + char.sid + "' style='margin-left: " + (((char.x - 1) * 40)) + "px; margin-top: " + (((char.y - 1) * 40)) + "px;" + "'>" + namediv + lifediv + "<div class='charimg char8'></div></div>");
         },
         remove(sid) {
             $("#char_" + sid).remove();
         },
-        move(sid, x, y) {
+        move(sid, x, y, key) { 
+
+            $("#char_" + sid).removeClass("right");
+            $("#char_" + sid).removeClass("down");
+            $("#char_" + sid).removeClass("up");
+            console.log(key);
+            switch(key) {
+                case 'ArrowRight': $("#char_" + sid).addClass("right"); break;
+                case 'ArrowLeft': break;
+                case 'ArrowDown': $("#char_" + sid).addClass("down"); break;
+                case 'ArrowUp': $("#char_" + sid).addClass("up"); break;
+            }
             $("#char_" + sid).css("margin-left", (((x - 1) * 40)) + "px");
             $("#char_" + sid).css("margin-top", (((y - 1) * 40)) + "px");
         }

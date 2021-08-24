@@ -1,0 +1,173 @@
+.char {
+    transition: margin 400ms;
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    z-index: 999;
+}
+
+.charimg {
+    width: 					32px;
+    height: 				32px;
+    margin-left:            4px;
+    margin-top:             5px;
+}
+
+.char1 {
+    background-image: 		url("../img/sprites/dragon10.png");
+    background-repeat: 		no-repeat;
+    background-position: 	-32px -32px;
+    z-index: 				2;
+}
+
+.right .char1 {
+    background-position: 	-32px -64px;
+}
+
+.up .char1 {
+    background-position: 	-32px -96px;
+}
+
+.down .char1 {
+    background-position: 	-32px 0px;
+}
+.char2 {
+    width: 					32px;
+    height: 				32px;
+    background-image: 		url("../img/sprites/dragon10.png");
+    background-repeat: 		no-repeat;
+    background-position: 	-128px -32px;
+    z-index: 				2;
+}
+
+.right .char2 {
+    background-position: 	-128px -64px;
+}
+
+.up .char2 {
+    background-position: 	-128px -96px;
+}
+
+.down .char2 {
+    background-position: 	-128px 0px;
+}
+.char3 {
+    width: 					32px;
+    height: 				32px;
+    background-image: 		url("../img/sprites/dragon10.png");
+    background-repeat: 		no-repeat;
+    background-position: 	-224px -32px;
+    z-index: 				2;
+}
+
+.right .char3 {
+    background-position: 	-224px -64px;
+}
+
+.up .char3 {
+    background-position: 	-224px -96px;
+}
+
+.down .char3 {
+    background-position: 	-224px 0px;
+}
+.char4 {
+    width: 					32px;
+    height: 				32px;
+    background-image: 		url("../img/sprites/dragon10.png");
+    background-repeat: 		no-repeat;
+    background-position: 	-320px -32px;
+    z-index: 				2;
+}
+
+.right .char4 {
+    background-position: 	-320px -64px;
+}
+
+.up .char4 {
+    background-position: 	-320px -96px;
+}
+
+.down .char4 {
+    background-position: 	-320px 0px;
+}
+.char5 {
+    width: 					32px;
+    height: 				32px;
+    background-image: 		url("../img/sprites/dragon10.png");
+    background-repeat: 		no-repeat;
+    background-position: 	-32px -160px;
+    z-index: 				2;
+}
+
+.right .char5 {
+    background-position: 	-32px -192px;
+}
+
+.up .char5 {
+    background-position: 	-32px -224px;
+}
+
+.down .char5 {
+    background-position: 	-32px -128px;
+}
+.char6 {
+    width: 					32px;
+    height: 				32px;
+    background-image: 		url("../img/sprites/dragon10.png");
+    background-repeat: 		no-repeat;
+    background-position: 	-128px -160px;
+    z-index: 				2;
+}
+
+.right .char6 {
+    background-position: 	-128px -192px;
+}
+
+.up .char6 {
+    background-position: 	-128px -224px;
+}
+
+.down .char6 {
+    background-position: 	-128px -128px;
+}
+.char7 {
+    width: 					32px;
+    height: 				32px;
+    background-image: 		url("../img/sprites/dragon10.png");
+    background-repeat: 		no-repeat;
+    background-position: 	-224px -160px;
+    z-index: 				2;
+}
+
+.right .char7 {
+    background-position: 	-224px -192px;
+}
+
+.up .char7 {
+    background-position: 	-224px -224px;
+}
+
+.down .char7 {
+    background-position: 	-224px -128px;
+}
+.char8 {
+    width: 					32px;
+    height: 				32px;
+    background-image: 		url("../img/sprites/dragon10.png");
+    background-repeat: 		no-repeat;
+    background-position: 	-320px -160px;
+    z-index: 				2;
+}
+
+.right .char8 {
+    background-position: 	-320px -192px;
+}
+
+.up .char8 {
+    background-position: 	-320px -224px;
+}
+
+.down .char8 {
+    background-position: 	-320px -128px;
+}
