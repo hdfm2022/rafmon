@@ -1,6 +1,4 @@
 dance = (socket, data) => {
-    console.log("entered dance function with socket");
-
     let mapId = mapIdsBySocketId[socket.id];
 
     const map = maps[mapId];

@@ -3,7 +3,6 @@ const charDisappearInMap = require("../in_out_map/char_disappear_in_map");
 const tryToMoveItem = require("./try_to_move_item");
 
 move = (socket, data) => {
-    console.log("entered move function with socket");
 
     const velocidadeMaximaMS = 180;
 
