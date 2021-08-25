@@ -5,13 +5,19 @@ function init_map(mapId) {
             return {
                 ...baseMap
                 , items: [
-
+                    { type: 'stone', x: 9, y: 7, status: "" },
+                    { type: 'stone', x: 24, y: 7, status: "" },
                 ]
+                , switches: 2
                 , floors: [
                     { type: 'portal', x: 4, y: 1, nextMap: 2 },
                     { type: 'portal', x: 2, y: 2, nextMap: 5 },
-                    { type: 'portal', x: 20, y: 2, nextMap: 5 }
+                    { type: 'portal', x: 20, y: 2, nextMap: 5 },
+                    { type: 'switch', x: 15, y: 8 },
+                    { type: 'switch', x: 16, y: 8 },
                 ]
+                , onFinishSwitchs:
+                    { type: 'portal', x: 24, y: 14, nextMap: 3 }
                 , big: [
                     { type: 'blocked', x1: 6, y1: 1, x2: 7, y2: 1 },
                     { type: 'blocked', x1: 3, y1: 8, x2: 7, y2: 8 },
@@ -54,7 +60,11 @@ function init_map(mapId) {
                 , items: [
                 ]
                 , floors: [
-                    { type: 'portal', x: 11, y: 14, nextMap: 2 } 
+                    { type: 'portal', x: 11, y: 14, nextMap: 2 },
+                    { type: 'portal', x: 24, y: 14, nextMap: 1 },
+                ]
+                , big: [
+                    { type: 'water', x1: 19, y1: 1, x2: 21, y2: 15 },
                 ]
             };
         case 5:
@@ -68,7 +78,7 @@ function init_map(mapId) {
                     { type: 'stone', x: 17, y: 11, status: "" },
                     { type: 'stone', x: 17, y: 12, status: "" },
 
-                    
+
                     { type: 'stone', x: 9, y: 7, status: "" },
                     { type: 'stone', x: 6, y: 9, status: "" },
                     { type: 'stone', x: 9, y: 10, status: "" },
@@ -79,10 +89,10 @@ function init_map(mapId) {
                     { type: 'stone', x: 4, y: 1, status: "" },
                     { type: 'stone', x: 23, y: 1, status: "" },
                 ]
-                , switches: 4 
+                , switches: 4
                 , floors: [
                     { type: 'portal', x: 2, y: 2, nextMap: 1 },
-                    
+
                     { type: 'switch', x: 15, y: 5, status: "" },
                     { type: 'switch', x: 22, y: 5, status: "" },
 
@@ -104,7 +114,7 @@ function init_map(mapId) {
                     { type: 'blocked', x1: 10, y1: 5, x2: 10, y2: 5 },
 
                     { type: 'blocked', x1: 12, y1: 5, x2: 12, y2: 5 },
-                    { type: 'blocked'  , x1: 7, y1: 8, x2: 8, y2: 9 },
+                    { type: 'blocked', x1: 7, y1: 8, x2: 8, y2: 9 },
 
                     { type: 'blocked', x1: 14, y1: 13, x2: 23, y2: 13 },
                     { type: 'blocked', x1: 13, y1: 4, x2: 13, y2: 13 },
@@ -115,7 +125,7 @@ function init_map(mapId) {
                     { type: 'blocked', x1: 16, y1: 5, x2: 16, y2: 5 },
                     { type: 'blocked', x1: 21, y1: 5, x2: 21, y2: 5 },
                     // { type: 'blocked', x1: 23, y1: 5, x2: 23, y2: 5 }, // retirado para deixar os 2 puzzles dierentes...
-                    { type: 'blocked'  , x1: 18, y1: 8, x2: 19, y2: 9 },
+                    { type: 'blocked', x1: 18, y1: 8, x2: 19, y2: 9 },
 
                     { type: 'blocked', x1: 24, y1: 4, x2: 24, y2: 13 },
 
