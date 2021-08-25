@@ -18,6 +18,8 @@ socket.on('youAreConnected', message => {
 
     map.connect();
 
+    $("#map_id").html(mapId);
+
     for (const [floorId, floor] of Object.entries(message.mapinfo.floors)) {
         map.floor.append(floorId, floor);
     }

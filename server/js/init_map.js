@@ -10,7 +10,7 @@ function init_map(mapId) {
                 , floors: [
                     { type: 'portal', x: 4, y: 1, nextMap: 2 },
                     { type: 'portal', x: 2, y: 2, nextMap: 5 },
-                    { type: 'portal', x: 10, y: 3, nextMap: 5 }, // hoje nao tem como chegar aqui...
+                    { type: 'portal', x: 20, y: 2, nextMap: 5 }
                 ]
                 , big: [
                     { type: 'blocked', x1: 6, y1: 1, x2: 7, y2: 1 },
@@ -29,6 +29,7 @@ function init_map(mapId) {
                     { type: 'stone', x: 16, y: 12, status: "" },
                     { type: 'stone', x: 18, y: 4, status: "" },
                 ]
+                , switches: 5
                 , floors: [
                     { type: 'portal', x: 4, y: 1, nextMap: 1 },
                     { type: 'switch', x: 8, y: 15, status: "" },
@@ -37,7 +38,7 @@ function init_map(mapId) {
                     { type: 'switch', x: 25, y: 5, status: "" },
                     { type: 'switch', x: 25, y: 12, status: "" },
                 ], onFinishSwitchs:
-                    { type: 'portal', x: 11, y: 15, nextMap: 3 }
+                    { type: 'portal', x: 11, y: 14, nextMap: 3 }
                 , big: [
                     { type: 'blocked', x1: 6, y1: 3, x2: 6, y2: 3 },
                     { type: 'blocked', x1: 4, y1: 2, x2: 4, y2: 2 },
@@ -53,7 +54,7 @@ function init_map(mapId) {
                 , items: [
                 ]
                 , floors: [
-                    { type: 'portal', x: 9, y: 13, nextMap: 1 }, // 
+                    { type: 'portal', x: 11, y: 14, nextMap: 2 } 
                 ]
             };
         case 5:
@@ -74,6 +75,7 @@ function init_map(mapId) {
                     { type: 'stone', x: 6, y: 11, status: "" },
                     { type: 'stone', x: 6, y: 12, status: "" },
                 ]
+                , switches: 4 
                 , floors: [
                     { type: 'portal', x: 2, y: 2, nextMap: 1 },
                     
@@ -83,7 +85,7 @@ function init_map(mapId) {
                     { type: 'switch', x: 4, y: 5, status: "" },
                     { type: 'switch', x: 11, y: 5, status: "" },
                 ], onFinishSwitchs:
-                    { type: 'portal', x: 10, y: 3, nextMap: 1 }
+                    { type: 'portal', x: 20, y: 2, nextMap: 1 }
                 , big: [
 
 

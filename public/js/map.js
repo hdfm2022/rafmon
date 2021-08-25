@@ -3,9 +3,13 @@ map = {
         $("#map>div").remove();
         $("#login").hide();
         $("#map").show();
+        $("#map_info").show();
+        $("#chat").show();
     },
     disconnect() {
         $("#login").show();
+        $("#map_info").hide();
+        $("#chat").hide();
         $("#map").hide();
         $("#map>div").remove();
     },
@@ -70,6 +74,9 @@ map = {
         },
         move(sid, x, y, key) { 
 
+            if(socket.id == sid) {
+                $("#map_xy").html(`x${x} y${y}`)
+            }
             $("#char_" + sid).removeClass("right");
             $("#char_" + sid).removeClass("down");
             $("#char_" + sid).removeClass("up");

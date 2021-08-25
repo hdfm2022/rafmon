@@ -84,6 +84,8 @@ io.on('connection', socket => {
     });
 
     socket.on('sendLogin', data => {
+
+        data.username = sanitizeString(data.username);       
         const charPublicInfo = {
             sid: socket.id,
             login: data.username,
@@ -96,6 +98,11 @@ io.on('connection', socket => {
 
 });
 
+
+function sanitizeString(str){
+    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+    return str.trim();
+}
 
 
 server.listen(3001);

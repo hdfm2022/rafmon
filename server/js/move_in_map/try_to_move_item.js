@@ -69,16 +69,16 @@ function tryToMoveItem(mapId, itemId, movimentTried, socket, map) {
         });
 
         if (testAllStones) {
-            let closedRightNow = true;
+            let closedRightNow = 0;
             map.items.forEach(item => {
                 if (item.type == "stone") {
-                    if (item.status != "closed") {
-                        closedRightNow = false;
+                    if (item.status == "closed") {
+                        closedRightNow++;
                     }
                 }
             });
 
-            if (closedRightNow) {
+            if (maps[mapId].switches === closedRightNow) {
                 maps[mapId].floors.push(maps[mapId].onFinishSwitchs);
                 const retorno = { id : maps[mapId].floors.length - 1, floor: maps[mapId].onFinishSwitchs };
                 socket.emit('newFloorAppeared', retorno);

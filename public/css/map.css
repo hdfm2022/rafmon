@@ -2,8 +2,25 @@
     box-sizing: border-box;
 }
 
+html {
+    height: 100%;
+    width: 100%;
+}
+
 body {
     overflow: hidden;
+    font-family: Verdana;
+    font-size: 10px;
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+#map_info {
+    margin-left: 15px;
+    background: #eee;
+    padding: 2px;
+    width: 1000px;
 }
 
 #map {
