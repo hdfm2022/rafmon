@@ -74,6 +74,10 @@ function init_map(mapId) {
                     { type: 'stone', x: 9, y: 10, status: "" },
                     { type: 'stone', x: 6, y: 11, status: "" },
                     { type: 'stone', x: 6, y: 12, status: "" },
+
+                    // so pra testar 2 stones de dois lados diferentes
+                    { type: 'stone', x: 4, y: 1, status: "" },
+                    { type: 'stone', x: 23, y: 1, status: "" },
                 ]
                 , switches: 4 
                 , floors: [
@@ -100,7 +104,7 @@ function init_map(mapId) {
                     { type: 'blocked', x1: 10, y1: 5, x2: 10, y2: 5 },
 
                     { type: 'blocked', x1: 12, y1: 5, x2: 12, y2: 5 },
-                    { type: 'water'  , x1: 7, y1: 8, x2: 8, y2: 9 },
+                    { type: 'blocked'  , x1: 7, y1: 8, x2: 8, y2: 9 },
 
                     { type: 'blocked', x1: 14, y1: 13, x2: 23, y2: 13 },
                     { type: 'blocked', x1: 13, y1: 4, x2: 13, y2: 13 },
@@ -110,10 +114,13 @@ function init_map(mapId) {
                     { type: 'blocked', x1: 14, y1: 5, x2: 14, y2: 5 },
                     { type: 'blocked', x1: 16, y1: 5, x2: 16, y2: 5 },
                     { type: 'blocked', x1: 21, y1: 5, x2: 21, y2: 5 },
-                    { type: 'blocked', x1: 23, y1: 5, x2: 23, y2: 5 },
-                    { type: 'water'  , x1: 18, y1: 8, x2: 19, y2: 9 },
+                    // { type: 'blocked', x1: 23, y1: 5, x2: 23, y2: 5 }, // retirado para deixar os 2 puzzles dierentes...
+                    { type: 'blocked'  , x1: 18, y1: 8, x2: 19, y2: 9 },
 
                     { type: 'blocked', x1: 24, y1: 4, x2: 24, y2: 13 },
+
+                    // colocados dps, pra impedir que se faça do mesmo jeito as 2 soluções...
+                    { type: 'blocked', x1: 11, y1: 10, x2: 11, y2: 10 },
                 ]
             };
         default:

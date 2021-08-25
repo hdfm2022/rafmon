@@ -82,6 +82,19 @@ io.on('connection', socket => {
     socket.on('stopKamehame', data => {
         stopKamehame(socket)
     });
+    socket.on('adm_showPortal', data => {
+        const mapId = mapIdsBySocketId[socket.id];
+        if (maps[mapId].onFinishSwitchs) {
+            console.log("quest done");
+            maps[mapId].floors.push(maps[mapId].onFinishSwitchs);
+            const retorno = { id : maps[mapId].floors.length - 1, floor: maps[mapId].onFinishSwitchs };
+            socket.emit('newFloorAppeared', retorno);
+            socket.to('map_' + mapId).emit('newFloorAppeared', retorno);
+            maps[mapId].onFinishSwitchs = null;
+        } else {
+            console.log("nao tem o que mostrar");
+        }
+    });
 
     socket.on('sendLogin', data => {
 

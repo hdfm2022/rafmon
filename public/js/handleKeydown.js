@@ -54,6 +54,9 @@ function handleKeydown(event) {
                 myOwnChar.kamehameha = 0;
                 socket.emit('stopKamehame', {});
             }
+        } else if (keyPressed === "p" || keyPressed === "p") {
+            console.log("adm_showPortal");
+            socket.emit('adm_showPortal', {});
         } else {
             console.warn('unknow key', keyPressed);
         }

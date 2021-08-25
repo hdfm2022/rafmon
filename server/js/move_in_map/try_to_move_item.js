@@ -34,11 +34,20 @@ function tryToMoveItem(mapId, itemId, movimentTried, socket, map) {
     }
 
     if (collisionResult === true) {
-        item.status = "broked";
+        // para garantir os puzzles, se der colisão com pessoas, tem que fazer sumir o puzzle.
+        item.status = "vanished";
+        item.x = -1;
+        item.y = -1;
         const retorno = { id: itemId };
 
-        socket.emit('itemBroked', retorno);
-        socket.to('map_' + mapId).emit('itemBroked', retorno);
+        socket.emit('itemVanished', retorno);
+        socket.to('map_' + mapId).emit('itemVanished', retorno);
+
+        // item.status = "broked";
+        // const retorno = { id: itemId };
+
+        // socket.emit('itemBroked', retorno);
+        // socket.to('map_' + mapId).emit('itemBroked', retorno);
     }
 
     if (newItemPosition) {
@@ -79,10 +88,13 @@ function tryToMoveItem(mapId, itemId, movimentTried, socket, map) {
             });
 
             if (maps[mapId].switches === closedRightNow) {
-                maps[mapId].floors.push(maps[mapId].onFinishSwitchs);
-                const retorno = { id : maps[mapId].floors.length - 1, floor: maps[mapId].onFinishSwitchs };
-                socket.emit('newFloorAppeared', retorno);
-                socket.to('map_' + mapId).emit('newFloorAppeared', retorno);
+                if (maps[mapId].onFinishSwitchs) {
+                    maps[mapId].floors.push(maps[mapId].onFinishSwitchs);
+                    const retorno = { id : maps[mapId].floors.length - 1, floor: maps[mapId].onFinishSwitchs };
+                    socket.emit('newFloorAppeared', retorno);
+                    socket.to('map_' + mapId).emit('newFloorAppeared', retorno);
+                    maps[mapId].onFinishSwitchs = null;
+                }
             }
         }
     }
