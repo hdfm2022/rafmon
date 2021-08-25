@@ -53,15 +53,19 @@ function init_map(mapId) {
                     { type: 'water', x1: 12, y1: 9, x2: 15, y2: 15 },
                 ]
             };
-        // mapa vazio hoje...
         case 3:
             return {
                 ...baseMap
                 , items: [
+                    { type: 'stone', x: 18, y: 1, status: "" },
                 ]
+                , switches: 1
+                , onFinishSwitchs:
+                    { type: 'portal', x: 2, y: 2, nextMap: 6 }
                 , floors: [
                     { type: 'portal', x: 11, y: 14, nextMap: 2 },
                     { type: 'portal', x: 24, y: 14, nextMap: 1 },
+                    { type: 'switch', x: 1, y: 1, status: "" },
                 ]
                 , big: [
                     { type: 'water', x1: 19, y1: 1, x2: 21, y2: 15 },
@@ -131,6 +135,22 @@ function init_map(mapId) {
 
                     // colocados dps, pra impedir que se faça do mesmo jeito as 2 soluções...
                     { type: 'blocked', x1: 11, y1: 10, x2: 11, y2: 10 },
+                ]
+            };
+        case 6:
+            return {
+                ...baseMap
+                , items: [
+                    // { type: 'stone', x: 18, y: 1, status: "" },
+                ]
+                // , switches: 1
+                // , onFinishSwitchs:
+                //     { type: 'portal', x: 2, y: 2, nextMap: 6 }
+                , floors: [
+                    // { type: 'portal', x: 2, y: 2, nextMap: 3 }
+                ]
+                , big: [
+                    { type: 'red_water', x1: 1, y1: 1, x2: 25, y2: 15 },
                 ]
             };
         default:
