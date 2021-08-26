@@ -16,11 +16,23 @@ body {
     width: 100%;
 }
 
-#map_info {
+/* #map_info {
     margin-left: 15px;
     background: #eee;
     padding: 2px;
     width: 1000px;
+} */
+
+body {
+    background: gray;
+}
+
+#itemsstatus {
+    height: 630px;
+    margin-left: 15px;
+    width: calc(100% - 1030px);
+    background-image: url(../img/back-info.jpg);
+    color: white;
 }
 
 #map {

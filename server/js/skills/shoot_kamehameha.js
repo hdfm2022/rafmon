@@ -66,6 +66,15 @@ nextShootKamehameTimer = (socket) => {
         'kamehame': kamehame
     }
 
+    if (!kamehame.stopou) {
+        console.log("ki", private_chars[socket.id].ki);
+        if (private_chars[socket.id].ki > 5) {
+            private_chars[socket.id].ki -= 5;
+        } else {
+            kamehame.stopou = true;
+        }
+    }
+
     // se ja parou, diminui o tamanho pelo inicio... 
     if (kamehame.stopou) {
         switch(kamehame.direction) {
@@ -74,7 +83,8 @@ nextShootKamehameTimer = (socket) => {
             case "ArrowUp":     kamehame.y2--; break;
             case "ArrowDown":   kamehame.y1++; break;
         }
-    }
+    } 
+
 
     // se ainda não teve colisão, tenta crescer ainda o golpe...
     if (kamehame.hasCollision === false) {
@@ -152,14 +162,14 @@ nextShootKamehameTimer = (socket) => {
     if (kamehame.x1 <= kamehame.x2 && kamehame.y1 <= kamehame.y2) {
         // console.log(kamehame);
     
-        socket.emit('goingKamehameha', skill);
         socket.to('map_' + mapId).emit('goingKamehameha', skill);
+        skill.ki = private_chars[socket.id].ki;
+        socket.emit('goingKamehameha', skill);
     
         setTimeout(() => {
             nextShootKamehameTimer(socket)
         }, 200);
     } else {
-
         map['kamehames'][socket.id].active = false;
 
         console.log("finishedKamehame");

@@ -5,6 +5,8 @@ map = {
         $("#map").show();
         $("#map_info").show();
         $("#chat").show();
+        $("#itemsstatus").show();
+        
     },
     disconnect() {
         $("#login").show();
@@ -12,6 +14,7 @@ map = {
         $("#chat").hide();
         $("#map").hide();
         $("#map>div").remove();
+        $("#itemsstatus").hide();
     },
     floor: {
         append(itemId, item) {
@@ -72,23 +75,31 @@ map = {
         remove(sid) {
             $("#char_" + sid).remove();
         },
-        move(sid, x, y, key) { 
+        move(data) { 
+            // data.sid, data.x, data.y, data.key
+            console.log("move", data);
+            if(socket.id == data.sid) {
+                $("#map_xy").html(`x${data.x} y${data.y}`)
+                map.char.status.updateKi(data.ki);
+            }
+            $("#char_" + data.sid).removeClass("right");
+            $("#char_" + data.sid).removeClass("down");
+            $("#char_" + data.sid).removeClass("up");
 
-            if(socket.id == sid) {
-                $("#map_xy").html(`x${x} y${y}`)
-            }
-            $("#char_" + sid).removeClass("right");
-            $("#char_" + sid).removeClass("down");
-            $("#char_" + sid).removeClass("up");
-            console.log(key);
-            switch(key) {
-                case 'ArrowRight': $("#char_" + sid).addClass("right"); break;
+            switch(data.key) {
+                case 'ArrowRight': $("#char_" + data.sid).addClass("right"); break;
                 case 'ArrowLeft': break;
-                case 'ArrowDown': $("#char_" + sid).addClass("down"); break;
-                case 'ArrowUp': $("#char_" + sid).addClass("up"); break;
+                case 'ArrowDown': $("#char_" + data.sid).addClass("down"); break;
+                case 'ArrowUp': $("#char_" + data.sid).addClass("up"); break;
             }
-            $("#char_" + sid).css("margin-left", (((x - 1) * 40)) + "px");
-            $("#char_" + sid).css("margin-top", (((y - 1) * 40)) + "px");
+            $("#char_" + data.sid).css("margin-left", (((data.x - 1) * 40)) + "px");
+            $("#char_" + data.sid).css("margin-top", (((data.y - 1) * 40)) + "px");
+        },
+        status: {
+            updateKi(ki) {
+                $("#ki_atual").html(ki);
+                $("#ki_inside").css("width", Math.round((ki / $("#ki_max").data("value")) * 200) + "px");
+            }
         }
     },
     kamehame: {
@@ -133,6 +144,10 @@ map = {
             let height = actualsize + 40 * (data.kamehame.y2 - data.kamehame.y1);
             const marginleft = (20 - (actualsize / 2)) + (40 * (data.kamehame.x1 - 1));
             const margintop = (-18 - (actualsize / 2)) + (40 * (data.kamehame.y1));
+
+            if (data.sid == socket.id) {
+                map.char.status.updateKi(data.ki);
+            }
 
             if (data.kamehame.hasCollision) {
                 width += 15;

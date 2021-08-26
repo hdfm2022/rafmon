@@ -29,14 +29,24 @@
 
     </div>
 
-    <div id="map_info" style="display:none;">
-       <span id="map_id"></span>
-       (<span id="map_xy"></span>) 
-    </div>
-    <div id="map" style="display:none; width: 1000px; height: 600px; background-image: url('img/rock.png')">
+    <!-- <div id="map_info" style="display:none;">
+        <span id="map_id"></span>
+        (<span id="map_xy"></span>)
+    </div> -->
+    <div id="map" style="float:left; display:none; width: 1000px; height: 600px; background-image: url('img/rock.png')">
 
     </div>
-    <div style="display:none; height: calc(100% - 630px); width: 100%; background: black; color: greenyellow; margin-top: 15px;" id="chat">
+    <div id="itemsstatus" style="display:none; float:left; margin: 2px; ">
+        <div style=" line-height: 15px; margin-left: 3px; margin-top: 3px; width: 300px; border: solid 1px gray; padding: 3px; background: rgba(0,0,0,0.2); height: 45px;">
+            <div style="width:200px; background: gray; height: 15px; clear:both; margin-bottom: 5px; float:left;"><div style="height: 15px; width: 200px; background: green;"></div></div>
+            <div style="float:left; width: 45px; text-align:right;">100</div><div style="float:left;">/100</div>
+
+            <div style="width:200px; background: gray; height: 15px; clear:both; float:left;"><div id="ki_inside" style="height: 15px; width: 200px; background: blue;"></div></div>
+            <div style="float:left; width: 45px; text-align:right;" id="ki_atual">100</div><div style="float:left;" id="ki_max" data-value="100">/100</div>
+        </div>
+    </div>
+    <div style="clear:both; display:none; height: calc(100% - 630px); width: 100%; background: black; color: greenyellow; margin-top: 15px;"
+        id="chat">
 
     </div>
 

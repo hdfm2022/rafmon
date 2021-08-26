@@ -38,11 +38,11 @@ function init_map(mapId) {
                 , switches: 5
                 , floors: [
                     { type: 'portal', x: 4, y: 1, nextMap: 1 },
-                    { type: 'switch', x: 8, y: 15, status: "" },
-                    { type: 'switch', x: 1, y: 4, status: "" },
-                    { type: 'switch', x: 7, y: 1, status: "" },
-                    { type: 'switch', x: 25, y: 5, status: "" },
-                    { type: 'switch', x: 25, y: 12, status: "" },
+                    { type: 'switch', x: 8, y: 15 },
+                    { type: 'switch', x: 1, y: 4 },
+                    { type: 'switch', x: 7, y: 1 },
+                    { type: 'switch', x: 25, y: 5 },
+                    { type: 'switch', x: 25, y: 12, },
                 ], onFinishSwitchs:
                     { type: 'portal', x: 11, y: 14, nextMap: 3 }
                 , big: [
@@ -88,20 +88,16 @@ function init_map(mapId) {
                     { type: 'stone', x: 9, y: 10, status: "" },
                     { type: 'stone', x: 6, y: 11, status: "" },
                     { type: 'stone', x: 6, y: 12, status: "" },
-
-                    // so pra testar 2 stones de dois lados diferentes
-                    { type: 'stone', x: 4, y: 1, status: "" },
-                    { type: 'stone', x: 23, y: 1, status: "" },
                 ]
                 , switches: 4
                 , floors: [
                     { type: 'portal', x: 2, y: 2, nextMap: 1 },
 
-                    { type: 'switch', x: 15, y: 5, status: "" },
-                    { type: 'switch', x: 22, y: 5, status: "" },
+                    { type: 'switch', x: 15, y: 5 },
+                    { type: 'switch', x: 22, y: 5 },
 
-                    { type: 'switch', x: 4, y: 5, status: "" },
-                    { type: 'switch', x: 11, y: 5, status: "" },
+                    { type: 'switch', x: 4, y: 5 },
+                    { type: 'switch', x: 11, y: 5 },
                 ], onFinishSwitchs:
                     { type: 'portal', x: 20, y: 2, nextMap: 1 }
                 , big: [
@@ -112,10 +108,10 @@ function init_map(mapId) {
                     // { type: 'blocked', x1: 1, y1: 4, x2: 10, y2: 12 },
 
                     { type: 'blocked', x1: 3, y1: 4, x2: 6, y2: 4 },
-                    { type: 'blocked', x1: 9, y1: 4, x2: 12, y2: 4 },
+                    { type: 'blocked', x1: 11, y1: 4, x2: 12, y2: 4 },
                     { type: 'blocked', x1: 3, y1: 5, x2: 3, y2: 5 },
                     { type: 'blocked', x1: 5, y1: 5, x2: 5, y2: 5 },
-                    { type: 'blocked', x1: 10, y1: 5, x2: 10, y2: 5 },
+                    // { type: 'blocked', x1: 10, y1: 5, x2: 10, y2: 5 },
 
                     { type: 'blocked', x1: 12, y1: 5, x2: 12, y2: 5 },
                     { type: 'blocked', x1: 7, y1: 8, x2: 8, y2: 9 },
