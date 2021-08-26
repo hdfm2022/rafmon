@@ -162,8 +162,9 @@ nextShootKamehameTimer = (socket) => {
     if (kamehame.x1 <= kamehame.x2 && kamehame.y1 <= kamehame.y2) {
         // console.log(kamehame);
     
-        socket.emit('goingKamehameha', skill);
         socket.to('map_' + mapId).emit('goingKamehameha', skill);
+        skill.ki = private_chars[socket.id].ki;
+        socket.emit('goingKamehameha', skill);
     
         setTimeout(() => {
             nextShootKamehameTimer(socket)

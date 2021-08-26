@@ -98,13 +98,17 @@ move = (socket, data) => {
     }
 
     if (newCharPosition) {
-        private_chars[socket.id].ki++;
+        if (private_chars[socket.id].ki < private_chars[socket.id].ki_max) {
+            private_chars[socket.id].ki++;
+        }
         char.actualPosition = data.key;
 
         const retorno = { sid: socket.id, x: char.x, y: char.y, key: data.key };
-        socket.emit('charMoved', retorno);
-        socket.to('map_' + mapId).emit('charMoved', { retorno, ki: private_chars[socket.id].ki } );
+        socket.to('map_' + mapId).emit('charMoved', retorno );
         socket.to('logger').emit('logg', {'type' :"charMoved", 'mapId' : mapId, "data": retorno } );
+
+        retorno.ki = private_chars[socket.id].ki;
+        socket.emit('charMoved', retorno );
     }
 }
 module.exports = move;

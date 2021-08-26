@@ -46,7 +46,7 @@ socket.on('newFloorAppeared', data => {
 });
 
 socket.on('charMoved', data => {
-    map.char.move(data.sid, data.x, data.y, data.key);
+    map.char.move(data);
 });
 
 socket.on('charIsOutsideThisMap', message => {
