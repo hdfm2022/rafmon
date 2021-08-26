@@ -12,26 +12,32 @@ move = (socket, data) => {
     let mapId = mapIdsBySocketId[socket.id];
 
     const map = maps[mapId];
-    const char = map.chars[socket.id];
+    let char = '';
+    if (map && map.chars && map.chars[socket.id]) {
+        char = map.chars[socket.id];
+        privatechar = private_chars[socket.id];
+    } else {
+        return false;
+    }
 
     if (map['kamehames'][socket.id] && map['kamehames'][socket.id].active && map['kamehames'][socket.id].stopou === false) {
         console.log("nao pode mover enquanto kame...");
         return false;
     }
 
-    if (Date.now() - char.lastMoviment < velocidadeMaximaMS) {
+    if (privatechar && privatechar.lastMoviment && Date.now() - privatechar.lastMoviment < velocidadeMaximaMS) {
         console.log("nao pode mexer tao rapido");
 
-        if (char.nextMove) {
+        if (privatechar.nextMove) {
             console.log("clear");
-            clearTimeout(char.nextMove);
+            clearTimeout(privatechar.nextMove);
         } 
 
-        char.nextMove = setTimeout( () => { move(socket, data); }, velocidadeMaximaMS - Date.now() - char.lastMoviment )
+        privatechar.nextMove = setTimeout( () => { move(socket, data); }, velocidadeMaximaMS - Date.now() - char.lastMoviment )
 
         return false;
     }
-    char.lastMoviment = Date.now();
+    privatechar.lastMoviment = Date.now();
 
     if (!char) {
         console.log("problema");
@@ -92,12 +98,12 @@ move = (socket, data) => {
     }
 
     if (newCharPosition) {
-
+        private_chars[socket.id].ki++;
         char.actualPosition = data.key;
 
         const retorno = { sid: socket.id, x: char.x, y: char.y, key: data.key };
         socket.emit('charMoved', retorno);
-        socket.to('map_' + mapId).emit('charMoved', retorno);
+        socket.to('map_' + mapId).emit('charMoved', { retorno, ki: private_chars[socket.id].ki } );
         socket.to('logger').emit('logg', {'type' :"charMoved", 'mapId' : mapId, "data": retorno } );
     }
 }

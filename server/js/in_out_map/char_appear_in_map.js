@@ -21,7 +21,7 @@ function charAppearInMap(mapId, socket, charPublicInfo) {
     }
 
     console.log(infoConectado);
-    socket.emit('youAreConnected', JSON.stringify(infoConectado));
+    socket.emit('youAreConnected', JSON.stringify(infoConectado)); // a principio nem precisaria mais ser json, arrumei o bug circular...
 
     socket.join('game');
     socket.to('map_' + mapId).emit('newCharIsHere', charPublicInfo);

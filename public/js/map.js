@@ -5,6 +5,8 @@ map = {
         $("#map").show();
         $("#map_info").show();
         $("#chat").show();
+        $("#itemsstatus").show();
+        
     },
     disconnect() {
         $("#login").show();
@@ -12,6 +14,7 @@ map = {
         $("#chat").hide();
         $("#map").hide();
         $("#map>div").remove();
+        $("#itemsstatus").hide();
     },
     floor: {
         append(itemId, item) {

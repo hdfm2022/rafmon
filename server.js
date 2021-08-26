@@ -1,6 +1,7 @@
 global.maps = [];
 global.mapIdsBySocketId = [];
-global.chars = [];
+// global.chars = []; // nao uso mais
+global.private_chars = []; // dados que só o servidor precisa saber, e talvez o proprio usuario, mas nao todos os dados...
 
 const express = require('express');
 const path = require('path');
@@ -105,7 +106,11 @@ io.on('connection', socket => {
             nivel: 1,
             x: 1,
             y: 1,
+            life: 100,
         }
+
+        private_chars[socket.id] = { ki: 100, };
+        privatechar = private_chars[socket.id];
         charAppearInMap(1, socket, charPublicInfo);
     });
 
