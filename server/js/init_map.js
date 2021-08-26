@@ -38,11 +38,11 @@ function init_map(mapId) {
                 , switches: 5
                 , floors: [
                     { type: 'portal', x: 4, y: 1, nextMap: 1 },
-                    { type: 'switch', x: 8, y: 15, status: "" },
-                    { type: 'switch', x: 1, y: 4, status: "" },
-                    { type: 'switch', x: 7, y: 1, status: "" },
-                    { type: 'switch', x: 25, y: 5, status: "" },
-                    { type: 'switch', x: 25, y: 12, status: "" },
+                    { type: 'switch', x: 8, y: 15 },
+                    { type: 'switch', x: 1, y: 4 },
+                    { type: 'switch', x: 7, y: 1 },
+                    { type: 'switch', x: 25, y: 5 },
+                    { type: 'switch', x: 25, y: 12, },
                 ], onFinishSwitchs:
                     { type: 'portal', x: 11, y: 14, nextMap: 3 }
                 , big: [
@@ -93,11 +93,11 @@ function init_map(mapId) {
                 , floors: [
                     { type: 'portal', x: 2, y: 2, nextMap: 1 },
 
-                    { type: 'switch', x: 15, y: 5, status: "" },
-                    { type: 'switch', x: 22, y: 5, status: "" },
+                    { type: 'switch', x: 15, y: 5 },
+                    { type: 'switch', x: 22, y: 5 },
 
-                    { type: 'switch', x: 4, y: 5, status: "" },
-                    { type: 'switch', x: 11, y: 5, status: "" },
+                    { type: 'switch', x: 4, y: 5 },
+                    { type: 'switch', x: 11, y: 5 },
                 ], onFinishSwitchs:
                     { type: 'portal', x: 20, y: 2, nextMap: 1 }
                 , big: [
