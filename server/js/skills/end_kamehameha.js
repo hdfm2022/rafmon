@@ -3,6 +3,17 @@ endKamehame = (socket) => {
     const map = maps[mapId];
     const char = map['chars'][socket.id];
 
+    const kamehame = map['kamehames'][socket.id];
+    if (!kamehame) {
+        console.log("nao encontrou kamehame");
+        //return false;
+    } else {
+        if (kamehame.stopou === false) {
+            console.log("nao pode parar");
+            return false;
+        }
+    }
+
     const skill = {
         'sid': socket.id
     }

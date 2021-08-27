@@ -9,7 +9,7 @@ startKamehame = (socket) => {
     }
 
 
-    if (private_chars[socket.id].ki >= 5) {
+    if (private_chars[socket.id].ki >= 30) {
         char.kame_start = Date.now();
 
         const skill = {
