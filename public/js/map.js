@@ -99,6 +99,10 @@ map = {
             updateKi(ki) {
                 $("#ki_atual").html(ki);
                 $("#ki_inside").css("width", Math.round((ki / $("#ki_max").data("value")) * 200) + "px");
+            },
+            updateKiMax(ki_max) {
+                $("#ki_max").data("value", ki_max);
+                $("#ki_max").html("/"+ki_max);
             }
         }
     },

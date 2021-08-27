@@ -36,6 +36,9 @@ socket.on('youAreConnected', message => {
         map.big.append(itemId, item);
     }
 
+    map.char.status.updateKiMax(message.charInfo.ki_max);
+    map.char.status.updateKi(message.charInfo.ki);
+
     $("#song").html("");
     $("#song").append("<audio controls autoplay > <source src=\"mp3/"+message.mapinfo.song+"\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio>");
 });
