@@ -72,8 +72,8 @@ nextShootKamehameTimer = (socket) => {
 
     if (!kamehame.stopou) {
         // console.log("ki", private_chars[socket.id].ki);
-        if (private_chars[socket.id].ki >= 5) {
-            private_chars[socket.id].ki -= 5;
+        if (private_chars[socket.id].ki >= kamehame.size) {
+            private_chars[socket.id].ki -= kamehame.size;
         } else {
             kamehame.stopou = true;
         }
@@ -88,7 +88,6 @@ nextShootKamehameTimer = (socket) => {
             case "ArrowDown":   kamehame.y1++; break;
         }
     } 
-
 
     // se ainda não teve colisão, tenta crescer ainda o golpe...
     if (kamehame.hasCollision === false) {
