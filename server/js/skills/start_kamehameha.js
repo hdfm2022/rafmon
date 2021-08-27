@@ -8,17 +8,24 @@ startKamehame = (socket) => {
         return false;
     }
 
+
+    if (private_chars[socket.id].ki >= 5) {
+        char.kame_start = Date.now();
+
+        const skill = {
+            'sid': socket.id
+        }
+        socket.emit('startKamehame', skill);
+        socket.to('map_' + mapId).emit('startKamehame', skill);
+    } else {
+        char.kame_start = null;
+        console.log("nao tem KI pra começar novo kamehameha");
+    }
+
     // if (map['kamehames'][socket.id]) {
     //     console.log("nao pode começar outro kamehameha");
     //     return false;
     // } else {
-    char.kame_start = Date.now()
-
-    const skill = {
-        'sid': socket.id
-    }
-    socket.emit('startKamehame', skill);
-    socket.to('map_' + mapId).emit('startKamehame', skill);
     // }
 }
 

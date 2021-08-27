@@ -9,11 +9,15 @@ shootKamehame = (socket) => {
     let x = (char.x);
     let y = (char.y);
 
+    if(char.kame_start === null) {
+        console.log("nem começou kame. melhoria: nem deixar frontend mandar a informação de shoot, ja que nem começou!");
+        return false;
+    }
+
     if (map['kamehames'][socket.id] && map['kamehames'][socket.id].active) {
         console.log("nao pode atirar novo kame");
         return false;
     }
-
 
     map['kamehames'][socket.id] = { 
           cx: x
@@ -67,7 +71,7 @@ nextShootKamehameTimer = (socket) => {
     }
 
     if (!kamehame.stopou) {
-        console.log("ki", private_chars[socket.id].ki);
+        // console.log("ki", private_chars[socket.id].ki);
         if (private_chars[socket.id].ki >= 5) {
             private_chars[socket.id].ki -= 5;
         } else {
@@ -154,7 +158,7 @@ nextShootKamehameTimer = (socket) => {
                 case "ArrowDown":   kamehame.y2++; break;
             }
         }
-        console.log("Log", collisionResult, "x", kamehame.x1, kamehame.x2, "y", kamehame.y1, kamehame.y2)
+        // console.log("Log", collisionResult, "x", kamehame.x1, kamehame.x2, "y", kamehame.y1, kamehame.y2)
     }
 
 
