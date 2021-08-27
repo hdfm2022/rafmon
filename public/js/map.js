@@ -6,7 +6,7 @@ map = {
         $("#map_info").show();
         $("#chat").show();
         $("#itemsstatus").show();
-        
+
     },
     disconnect() {
         $("#login").show();
@@ -34,7 +34,7 @@ map = {
             let image = item.type;
             if (image == "water" || image == "red_water") {
                 $("#map").append("<div data-type='" + item.type + "' class='water item' id='item_" + itemId + "' style='overflow: hidden; margin-left: " + (((item.x1 - 1) * 40)) + "px; margin-top: " + (((item.y1 - 1) * 40)) + "px; width: " + (((item.x2 - item.x1 + 1) * 40)) + "px; height: " + (((item.y2 - item.y1 + 1) * 40)) + "px;'><div class='insidewater waterLefting' style='width: calc(100% + 96px); height: calc(100%);background-image: url(\"img/big/" + image + ".jpg\")'></div></div>");
-           
+
             } else {
                 $("#map").append("<div data-type='" + item.type + "' class='item' id='item_" + itemId + "' style='margin-left: " + (((item.x1 - 1) * 40)) + "px; margin-top: " + (((item.y1 - 1) * 40)) + "px; width: " + (((item.x2 - item.x1 + 1) * 40)) + "px; height: " + (((item.y2 - item.y1 + 1) * 40)) + "px; background-image: url(\"img/big/" + image + ".jpg\")'></div>");
 
@@ -75,10 +75,10 @@ map = {
         remove(sid) {
             $("#char_" + sid).remove();
         },
-        move(data) { 
+        move(data) {
             // data.sid, data.x, data.y, data.key
             console.log("move", data);
-            if(socket.id == data.sid) {
+            if (socket.id == data.sid) {
                 $("#map_xy").html(`x${data.x} y${data.y}`)
                 map.char.status.updateKi(data.ki);
             }
@@ -86,7 +86,7 @@ map = {
             $("#char_" + data.sid).removeClass("down");
             $("#char_" + data.sid).removeClass("up");
 
-            switch(data.key) {
+            switch (data.key) {
                 case 'ArrowRight': $("#char_" + data.sid).addClass("right"); break;
                 case 'ArrowLeft': break;
                 case 'ArrowDown': $("#char_" + data.sid).addClass("down"); break;
@@ -102,7 +102,7 @@ map = {
             },
             updateKiMax(ki_max) {
                 $("#ki_max").data("value", ki_max);
-                $("#ki_max").html("/"+ki_max);
+                $("#ki_max").html("/" + ki_max);
             }
         }
     },
@@ -146,15 +146,21 @@ map = {
             const actualsize = $(kamediv).data("size");
             let width = actualsize + 40 * (data.kamehame.x2 - data.kamehame.x1);
             let height = actualsize + 40 * (data.kamehame.y2 - data.kamehame.y1);
-            const marginleft = (20 - (actualsize / 2)) + (40 * (data.kamehame.x1 - 1));
-            const margintop = (-18 - (actualsize / 2)) + (40 * (data.kamehame.y1));
+            let marginleft = (20 - (actualsize / 2)) + (40 * (data.kamehame.x1 - 1));
+            let margintop = (-18 - (actualsize / 2)) + (40 * (data.kamehame.y1));
 
             if (data.sid == socket.id) {
                 map.char.status.updateKi(data.ki);
             }
 
             if (data.kamehame.hasCollision) {
-                width += 15;
+                switch (data.kamehame.direction) {
+                    case "ArrowRight": width += 15; break;
+                    case 'ArrowLeft': width += 15; marginleft -= 15; break;
+                    case 'ArrowDown': height += 15; break;
+                    case 'ArrowUp': margintop -= 15; height += 15; break;
+                }
+                console.log(data.kamehame, "talvez nem precisaria reprintar, ja que pode estar igual...");
             }
 
             $(kamediv).css('width', (width) + "px");
