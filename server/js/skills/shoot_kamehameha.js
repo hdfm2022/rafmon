@@ -68,7 +68,7 @@ nextShootKamehameTimer = (socket) => {
 
     if (!kamehame.stopou) {
         console.log("ki", private_chars[socket.id].ki);
-        if (private_chars[socket.id].ki > 5) {
+        if (private_chars[socket.id].ki >= 5) {
             private_chars[socket.id].ki -= 5;
         } else {
             kamehame.stopou = true;
