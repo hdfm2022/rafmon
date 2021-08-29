@@ -130,7 +130,7 @@ map = {
                 $(kamediv).css("margin-left", (20 - (actualsize / 2)) + "px");
 
                 if (actualsize < 32) {
-                    console.log("set new timeout");
+                    console.log("set new timeout map.kamehame.grown(data)");
                     setTimeout(() => { map.kamehame.grown(data) }, 1000);
                 }
             }

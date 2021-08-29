@@ -62,11 +62,10 @@
             const liberaSemSenha = true;
 
             if (username.length && (password.length || liberaSemSenha)) {
-                const messageObject = {
+                socket.emit('sendLogin', {
                     username: username,
                     password: password,
-                };
-                socket.emit('sendLogin', messageObject);
+                });
             }
         });
     </script>
