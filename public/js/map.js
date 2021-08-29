@@ -119,7 +119,6 @@ map = {
             if ($(kamediv).data("size") && $(kamediv).data("shoot") == "0") {
                 let actualsize = $(kamediv).data("size");
                 actualsize += 2;
-                console.log(actualsize, "size atual");
                 $(kamediv).data("size", actualsize);
 
                 $(kamediv).css("width", actualsize + "px");
@@ -130,9 +129,13 @@ map = {
                 $(kamediv).css("margin-left", (20 - (actualsize / 2)) + "px");
 
                 if (actualsize < 32) {
-                    console.log("set new timeout map.kamehame.grown(data)");
+                    console.log(actualsize, "new timeout map.kamehame.grown()");
                     setTimeout(() => { map.kamehame.grown(data) }, 1000);
+                } else {
+                    console.log(actualsize, "max size atual");
                 }
+            } else {
+                console.error("nao achou kamehameha...", data);
             }
         },
         stop(data) {
