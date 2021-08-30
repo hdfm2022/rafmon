@@ -171,7 +171,7 @@ nextShootKamehameTimer = (socket) => {
     
         setTimeout(() => {
             nextShootKamehameTimer(socket)
-        }, 200);
+        }, 180);
     } else {
         map['kamehames'][socket.id].active = false;
 

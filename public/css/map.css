@@ -76,7 +76,7 @@ body {
 }
 
 .kamehameha {
-    transition: 200ms;
+    transition: 180ms;
     background: yellow;
     position: fixed;
     margin-top: -24px;
