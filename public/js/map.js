@@ -2,19 +2,13 @@ map = {
     connect() {
         $("#map>div").remove();
         $("#login").hide();
-        $("#map").show();
-        $("#map_info").show();
-        $("#chat").show();
-        $("#itemsstatus").show();
+        $(".divs_game").show();
 
     },
     disconnect() {
         $("#login").show();
-        $("#map_info").hide();
-        $("#chat").hide();
-        $("#map").hide();
+        $(".divs_game").hide();
         $("#map>div").remove();
-        $("#itemsstatus").hide();
     },
     floor: {
         append(itemId, item) {

@@ -10,19 +10,21 @@ function init_map(mapId) {
                 ]
                 , switches: 2
                 , floors: [
+                    // { type: 'portal', x: 1, y: 4, nextMap: 6 }, // apenas para debug...
                     { type: 'portal', x: 4, y: 1, nextMap: 2 },
                     { type: 'portal', x: 2, y: 2, nextMap: 5 },
                     { type: 'portal', x: 20, y: 2, nextMap: 5 },
+                    { type: 'portal', x: 24, y: 14, nextMap: 6 },
                     { type: 'switch', x: 15, y: 8 },
                     { type: 'switch', x: 16, y: 8 },
                 ]
                 , onFinishSwitchs:
-                    { type: 'portal', x: 24, y: 14, nextMap: 3 }
+                    { type: 'portal', x: 24, y: 8, nextMap: 3 }
                 , big: [
                     { type: 'blocked', x1: 6, y1: 1, x2: 7, y2: 1 },
-                    { type: 'blocked', x1: 3, y1: 8, x2: 7, y2: 8 },
-                    { type: 'red_water', x1: 3, y1: 2, x2: 7, y2: 7 },
-                    { type: 'water', x1: 1, y1: 9, x2: 20, y2: 15 },
+                    { type: 'blocked', x1: 4, y1: 8, x2: 7, y2: 8 },
+                    { type: 'red_water', x1: 4, y1: 2, x2: 7, y2: 7 },
+                    { type: 'water', x1: 1, y1: 9, x2: 25, y2: 12 },
                 ]
             };
         case 2:
@@ -44,7 +46,7 @@ function init_map(mapId) {
                     { type: 'switch', x: 25, y: 5 },
                     { type: 'switch', x: 25, y: 12, },
                 ], onFinishSwitchs:
-                    { type: 'portal', x: 11, y: 14, nextMap: 3 }
+                    { type: 'portal', x: 10, y: 14, nextMap: 3 }
                 , big: [
                     { type: 'blocked', x1: 6, y1: 3, x2: 6, y2: 3 },
                     { type: 'blocked', x1: 4, y1: 2, x2: 4, y2: 2 },
@@ -63,8 +65,8 @@ function init_map(mapId) {
                 , onFinishSwitchs:
                     { type: 'portal', x: 2, y: 2, nextMap: 6 }
                 , floors: [
-                    { type: 'portal', x: 11, y: 14, nextMap: 2 },
-                    { type: 'portal', x: 24, y: 14, nextMap: 1 },
+                    { type: 'portal', x: 10, y: 14, nextMap: 2 },
+                    { type: 'portal', x: 24, y: 8, nextMap: 1 },
                     { type: 'switch', x: 1, y: 1, status: "" },
                 ]
                 , big: [
@@ -143,10 +145,12 @@ function init_map(mapId) {
                 // , onFinishSwitchs:
                 //     { type: 'portal', x: 2, y: 2, nextMap: 6 }
                 , floors: [
+                    { type: 'portal', x: 2, y: 2, nextMap: 3 },
+                    { type: 'portal', x: 24, y: 14, nextMap: 1 },
                     // { type: 'portal', x: 2, y: 2, nextMap: 3 }
                 ]
                 , big: [
-                    { type: 'red_water', x1: 1, y1: 1, x2: 25, y2: 15 },
+                    { type: 'water', x1: 2, y1: 8, x2: 25, y2: 10 },
                 ]
             };
         default:
