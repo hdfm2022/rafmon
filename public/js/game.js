@@ -40,7 +40,11 @@ socket.on('youAreConnected', message => {
     map.char.status.updateKi(message.charInfo.ki);
 
     $("#song").html("");
-    $("#song").append("<audio controls autoplay > <source src=\"mp3/"+message.mapinfo.song+"\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio>");
+    $("#song").append("<audio id=\"myaudio\" controls autoplay > <source src=\"mp3/"+message.mapinfo.song+"\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio>");
+
+    const audio = document.getElementById("myaudio");
+    audio.volume = 0.15;
+
 });
 
 socket.on('newFloorAppeared', data => {
