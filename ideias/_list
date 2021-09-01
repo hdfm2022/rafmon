@@ -6,7 +6,7 @@ admin comands
 geral
 [ ] level
 [ ] xp
-[ ] ki
+[x] ki
 [ ] life
 
 musica e sons
@@ -18,10 +18,33 @@ desempenho
 [ ] impedir frontend de mandar varias requisições
 
 bugs
-[ ] impedir 2 kamehameha ao mesmo tempo do mesmo socket.id
+[ ] impedir 2 kamehameha ao mesmo tempo do mesmo socket.id (acho que foi resolvido)
 
 minigames
 [ ] algo colab/competitivo (conta ponto de todos, mas tem ranking) com pontos acontecendo dna tela
 
 skills
-[ ] genki
+[ ] ki ball => o 
+[ ] genki => O
+
+                    * * * * 
+[ ] area 1 => * * * * * * * 
+                    * * * *
+char fica parado até o final
+vai aos poucos, não imediato...
+primeiros pedaços vão ficando com opacity maior até tudo sumir.
+o dano é feito so quando chega 
+
+[ ] area 2 => * * * * * * * * * *
+
+              * * *
+[ ] area 3 => * 8 * 
+              * * *
+
+                * * * 
+              * * * * *
+[ ] area 4 => * * 8 * *
+              * * * * *
+                * * * 
+
+[ ] area 5 => maior ainda... talvez de acordo com a carga ou nivel do char? ou skills diferentes?
