@@ -113,8 +113,7 @@ io.on('connection', socket => {
         }
 
         private_chars[socket.id] = { ki: 2000, ki_max:2000,};
-        privatechar = private_chars[socket.id];
-        charAppearInMap(1, socket, charPublicInfo, privatechar);
+        charAppearInMap(1, socket, charPublicInfo);
     });
 
 });

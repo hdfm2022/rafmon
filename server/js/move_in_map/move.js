@@ -85,7 +85,7 @@ move = (socket, data) => {
             if (data.key == "ArrowDown")  char.y += 2;
             if (data.key == "ArrowUp")    char.y -= 2;
             
-            charAppearInMap(mapId, socket, char, privatechar);
+            charAppearInMap(mapId, socket, char);
         }
         if (collisionResult.type == "item_collision") {
             if (map.items[collisionResult.item].type == "stone") {
