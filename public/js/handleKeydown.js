@@ -10,12 +10,25 @@ function handleKeyup(event) {
 
 function handleKeydown(event) {
     // f1 - f12
+    let useChatFirst = true;
+    let keyPressed = event.key;
     if (event.keyCode >= 112 && event.keyCode <= 123) {
         event.preventDefault();
+        useChatFirst = false;
     }
-    if (conectado) {
-        let keyPressed = event.key;
 
+    if (event.target.id == "chat_text" && useChatFirst) {
+        if (keyPressed == "Enter") {
+            if ($('#chat_text').val()) {
+                socket.emit('chat_msg', { message: $('#chat_text').val() });
+                $('#chat_text').val("");
+            }
+        }
+        //console.warn('unknow key', keyPressed);
+        return false;
+    }
+
+    if (conectado) {
         keyPressed = checkAtalhoKeyPressed(keyPressed);
 
         myOwnChar.lastActivity = Date.now();

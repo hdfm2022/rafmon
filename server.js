@@ -19,6 +19,7 @@ const startKamehame = require('./server/js/skills/start_kamehameha');
 const endKamehame   = require('./server/js/skills/end_kamehameha');
 const shootKamehame = require('./server/js/skills/shoot_kamehameha');
 const stopKamehame  = require('./server/js/skills/stop_kamehameha');
+const chatMessage = require('./server/js/chat/chat_message');
 
 const app = express();
 const server = require('http').createServer(app);
@@ -71,6 +72,9 @@ io.on('connection', socket => {
         }
     })
 
+    socket.on('chat_msg', data => {
+        chatMessage(socket, data);
+    });
     socket.on('endKamehame', data => {
         endKamehame(socket)
     });

@@ -20,7 +20,7 @@
 
 <body>
     <form id="login">
-        <input type="text" name="username" placeholder="Usuário">
+        <input type="text" id="username" name="username" placeholder="Usuário">
         <input type="password" name="password" placeholder="Senha">
         <button type="submit">Conectar</button>
     </form>
@@ -51,10 +51,12 @@
             (<span id="map_xy"></span>)
         </div> 
         
-        <input type="text" style="width: calc(100% - 80px);">
+        <input type="text" id="chat_text" style="width: calc(100% - 80px);">
     </div>
 
     <script>
+        $("input[name='username']").val(Math.floor((new Date().getMilliseconds() * new Date().getSeconds() * (0.1+Math.random())) + (Math.random() * 1000)));
+
         $("#login").submit(function (event) {
             event.preventDefault();
             if (conectado) {
