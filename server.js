@@ -72,9 +72,6 @@ io.on('connection', socket => {
         }
     })
 
-    socket.on('chat_msg', data => {
-        chatMessage(socket, data);
-    });
     socket.on('endKamehame', data => {
         endKamehame(socket)
     });
@@ -99,6 +96,10 @@ io.on('connection', socket => {
         } else {
             console.log("nao tem o que mostrar");
         }
+    });
+    socket.on('chat_msg', data => {
+        data.message = sanitizeString(data.message);
+        chatMessage(socket, data);
     });
 
     socket.on('sendLogin', data => {
