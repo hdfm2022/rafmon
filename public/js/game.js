@@ -120,5 +120,5 @@ socket.on('chatMessage', data => {
     if (iLastMessage > 100) {
         $(".msg_"+(iLastMessage-100)).remove();
     }
-    $("#chat").preppend("<div class='msg_"+iLastMessage+"' style='float:left; clear:both; color: white;'>"+data.name+":&nbsp;</div><div class='msg_"+iLastMessage+"' style='float:left;'>"+data.msg+"</div>");
+    $("#chat").prepend("<div class='msg_"+iLastMessage+"' style='float:left; clear:both; color: white;'>"+data.name+":&nbsp;</div><div class='msg_"+iLastMessage+"' style='float:left;'>"+data.msg+"</div>");
 });
